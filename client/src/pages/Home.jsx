@@ -3,6 +3,8 @@ import React from 'react'
 // import heroImg01 from '../assets/images/heroImg01';
 // import heroImg02 from '../assets/images/heroImg02';
 // import heroImg03 from '../assets/images/heroImg03';
+//import icon
+import {Link} from 'react-router-dom';
 
 const Home = () => {
   return (
@@ -49,11 +51,33 @@ const Home = () => {
             <img  className='w-full' src="{heroImg03}" alt="" />
           </div>
         </div>
-
       </div>
     </div>
    </section>
 
+   <section>
+    <div className="container">
+      <div className='lg:w-[470px] mx-auto'>
+        <h2 className='heading text-center'>Providing the best medical services</h2>
+        <p className='text-para text-center'>World-class care for everyone. Our health system offers unmatched, expert health care.</p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-[30px] mt-[30px] lg:mt-[55px]">
+        <div className='py-[30px] px-5'>
+          <div className="flex items-center justify-center">
+            <img src="" alt="icon" />
+          </div>
+
+          <div className='mt-[30px]'>
+            <h2 className='text-[26px] leading-9 text-headingColor font-[700] text-center'>Find a Doctor</h2>
+            <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'>World-class care for everyone. Our health system offers unmatched, expert health care.</p>
+
+            <Link to='/doctors'className='w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none'></Link>
+          </div>
+        </div>
+      </div>
+    </div>
+   </section>
    </>
   )
 };
