@@ -1,5 +1,4 @@
 export const services =[
-    [
         {
           name: "Cardiology",
           desc: "Comprehensive heart care for all cardiac conditions. Our team of cardiologists specializes in diagnosing and treating heart diseases, ensuring optimal heart health.",
@@ -36,6 +35,5 @@ export const services =[
           bgColor: "rgba(151, 113, 255, .2)",
           textColor: "#9771FF"
         }
-      ]
       
 ];

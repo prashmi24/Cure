@@ -5,6 +5,9 @@ import React from 'react'
 // import heroImg03 from '../assets/images/heroImg03';
 //import icon
 import {Link} from 'react-router-dom';
+import {BsArrowRight} from "react-icons/bs";
+import About from '../components/About/About';
+import ServiceList from '../components/Services/ServiceList';
 
 const Home = () => {
   return (
@@ -55,6 +58,8 @@ const Home = () => {
     </div>
    </section>
 
+   {/* how it works */}
+
    <section>
     <div className="container">
       <div className='lg:w-[470px] mx-auto'>
@@ -72,10 +77,60 @@ const Home = () => {
             <h2 className='text-[26px] leading-9 text-headingColor font-[700] text-center'>Find a Doctor</h2>
             <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'>World-class care for everyone. Our health system offers unmatched, expert health care.</p>
 
-            <Link to='/doctors'className='w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none'></Link>
+            <Link to='/doctors'className='w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none'>
+              <BsArrowRight className="group-hover:text-white w-6 h-5"></BsArrowRight>
+            </Link>
           </div>
         </div>
+
+        <div className='py-[30px] px-5'>
+          <div className="flex items-center justify-center">
+            <img src="" alt="icon" />
+          </div>
+
+          <div className='mt-[30px]'>
+            <h2 className='text-[26px] leading-9 text-headingColor font-[700] text-center'>Find a Location</h2>
+            <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'>World-class care for everyone. Our health system offers unmatched, expert health care.</p>
+
+            <Link to='/doctors'className='w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none'>
+              <BsArrowRight className="group-hover:text-white w-6 h-5"></BsArrowRight>
+            </Link>
+          </div>
+        </div>
+
+        <div className='py-[30px] px-5'>
+          <div className="flex items-center justify-center">
+            <img src="" alt="icon" />
+          </div>
+
+          <div className='mt-[30px]'>
+            <h2 className='text-[26px] leading-9 text-headingColor font-[700] text-center'>Book Appointment</h2>
+            <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'>World-class care for everyone. Our health system offers unmatched, expert health care.</p>
+
+            <Link to='/doctors'className='w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none'>
+              <BsArrowRight className="group-hover:text-white w-6 h-5"></BsArrowRight>
+            </Link>
+          </div>
+        </div>
+
+
       </div>
+    </div>
+   </section>
+
+   
+   {/* about */}
+   <About></About>
+
+   {/* services */}
+   <section>
+    <div className="container">
+      <div className="xl:w-[470px] mx-auto">
+        <h2 className="heading text-center">Our medical services</h2>
+        <p className="text-para text-center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione, alias.</p>
+      </div>
+
+      <ServiceList/>
     </div>
    </section>
    </>
