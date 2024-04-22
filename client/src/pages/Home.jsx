@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 import About from "../components/About/About";
 import ServiceList from "../components/Services/ServiceList";
+import DoctorsList from "./Doctors/DoctorsList";
 
 const Home = () => {
   return (
@@ -239,6 +240,7 @@ const Home = () => {
               alias.
             </p>
           </div>
+          <DoctorsList />
         </div>
       </section>
     </>
