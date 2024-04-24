@@ -1,14 +1,17 @@
 import React from "react";
-// import imgaes
-// import heroImg01 from '../assets/images/heroImg01';
-// import heroImg02 from '../assets/images/heroImg02';
-// import heroImg03 from '../assets/images/heroImg03';
-//import icon
+import heroImg from "../assets/images/heroImg.jpg";
+import icon1 from "../assets/images/icon1.png";
+import icon2 from "../assets/images/icon2.png";
+import icon3 from "../assets/images/icon3.png";
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 import About from "../components/About/About";
 import ServiceList from "../components/Services/ServiceList";
+import feature from "../assets/images/feature.jpg";
 import DoctorsList from "./Doctors/DoctorsList";
+import FaqList from "../components/Faq/FaqList";
+import faq from "../assets/images/faq.jpg";
+import Testimonial from "../components/Testimonial/Testimonial";
 
 const Home = () => {
   return (
@@ -59,12 +62,12 @@ const Home = () => {
 
             <div className="flex gap-[30px] justify-end">
               <div>
-                <img className="w-full" src="{heroImg01}" alt="" />
+                <img className="w-full" src={heroImg} alt="" />
               </div>
-              <div className="mt-[30px]">
-                <img className="w-full mb-[30px]" src="{heroImg02}" alt="" />
-                <img className="w-full" src="{heroImg03}" alt="" />
-              </div>
+              {/* <div className="mt-[30px]">
+                <img className="w-full mb-[30px]" src={} alt="" />
+                <img className="w-full" src={heroImg3} alt="" />
+              </div> */}
             </div>
           </div>
         </div>
@@ -86,8 +89,8 @@ const Home = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-[30px] mt-[30px] lg:mt-[55px]">
             <div className="py-[30px] px-5">
-              <div className="flex items-center justify-center">
-                <img src="" alt="icon" />
+              <div className="flex items-center justify-center ">
+                <img src={icon1} alt="icon" className="w-[200px] h-[200px]" />
               </div>
 
               <div className="mt-[30px]">
@@ -110,7 +113,7 @@ const Home = () => {
 
             <div className="py-[30px] px-5">
               <div className="flex items-center justify-center">
-                <img src="" alt="icon" />
+                <img src={icon2} alt="icon" className="w-[200px] h-[200px]" />
               </div>
 
               <div className="mt-[30px]">
@@ -133,7 +136,7 @@ const Home = () => {
 
             <div className="py-[30px] px-5">
               <div className="flex items-center justify-center">
-                <img src="" alt="icon" />
+                <img src={icon3} alt="icon" className="w-[200px] h-[200px]" />
               </div>
 
               <div className="mt-[30px]">
@@ -198,16 +201,16 @@ const Home = () => {
             </div>
 
             <div className="relative z-10 xl:w-[770px] flex justify-end mt-[50px] lg:mt-0">
-              <img src="" alt="feature_img" className="w-3/4" />
+              <img src={feature} alt="feature_img" className="w-fit" />
 
-              <div className="w-[150px] lg:w-[248px] bg-white absolute bottom-[50px] left-0 md:bottom-[100px] md:left-5 z-20 pb-2 pb-3 lg:pt-4 lg:px-4 lg:pb-[26px] rounded-[10px]">
+              {/* <div className="w-[150px] lg:w-[248px] bg-white absolute bottom-[50px] left-0 md:bottom-[100px] md:left-5 z-20 pb-2 pb-3 lg:pt-4 lg:px-4 lg:pb-[26px] rounded-[10px]">
                 <div className="flex items-center justify-between ">
                   <div className="flex items-center gap-[6px] lg:gap-3">
                     <p className="text-[10px] leading-[10px] lg:text-[14px] lg:leading-5 text-headingColor font-[600]">
-                      Tue, 24
+                      Mon, 24
                     </p>
                     <p className="text-[10px] leading-[10px] lg:text-[14px] lg:leading-5 text-headingColor font-[600]">
-                      10:00 AM
+                      12:00 PM
                     </p>
                   </div>
                   <span className="w-5 h-5 lg:w-[34px] lg:h-[34px] flex items-center justify-center bg-yellowColor rounded py-1 px-[6px] lg:py-3 lg:px-[9px]">
@@ -225,7 +228,7 @@ const Home = () => {
                     Wayne Collins
                   </h4>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -241,6 +244,37 @@ const Home = () => {
             </p>
           </div>
           <DoctorsList />
+        </div>
+      </section>
+
+      {/* faq */}
+      <section>
+        <div className="container">
+          <div className="flex justify-between gap-[50px] lg:gap-0">
+            <div className="w-1/2 hidden md:block mt-[100px]">
+              <img src={faq} alt="faq-img" />
+            </div>
+
+            <div className="w-full md:w-1/2 ml-[20px]">
+              <h2 className="heading">Frequently Asked Questions</h2>
+              <FaqList />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* testimonial */}
+
+      <section>
+        <div className="container">
+          <div className="xl:w-[470px] mx-auto">
+            <h2 className="heading text-center">What our patients say</h2>
+            <p className="text-para text-center">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione,
+              alias.
+            </p>
+          </div>
+          <Testimonial></Testimonial>
         </div>
       </section>
     </>

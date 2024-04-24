@@ -1,4 +1,6 @@
-// import doctor's image
+import doc1 from "../images/doc1.jpg";
+import doc2 from "../images/doc2.jpg";
+import doc3 from "../images/doc3.jpg";
 
 export const doctors=[
     {
@@ -7,7 +9,7 @@ export const doctors=[
         specialty: "Cardiologist",
         avgRating: 4.9,
         totalRating: 320,
-        photo: {},
+        photo: doc1,
         totalPatients: 1800,
         hospital: "New York Heart Center",
         },
@@ -18,7 +20,7 @@ export const doctors=[
         specialty: "Pediatrician",
         avgRating: 4.7,
         totalRating: 280,
-        photo: {},
+        photo: doc2,
         totalPatients: 2000,
         hospital: "Children's Hospital of Philadelphia",
         },
@@ -29,7 +31,7 @@ export const doctors=[
         specialty: "Dermatologist",
         avgRating: 4.6,
         totalRating: 310,
-        photo: {},
+        photo: doc3,
         totalPatients: 1700,
         hospital: "San Francisco Skin Clinic",
         },
@@ -40,7 +42,7 @@ export const doctors=[
         specialty: "Orthopedic Surgeon",
         avgRating: 4.8,
         totalRating: 350,
-        photo: {},
+        photo: doc1,
         totalPatients: 2200,
         hospital: "Mayo Clinic, Rochester",
         },
@@ -51,7 +53,7 @@ export const doctors=[
         specialty: "Oncologist",
         avgRating: 4.9,
         totalRating: 300,
-        photo: {},
+        photo: doc1,
         totalPatients: 1900,
         hospital: "MD Anderson Cancer Center, Houston",
         },
@@ -62,7 +64,7 @@ export const doctors=[
         specialty: "Neurologist",
         avgRating: 4.7,
         totalRating: 290,
-        photo: {},
+        photo: doc1,
         totalPatients: 1600,
         hospital: "Johns Hopkins Hospital, Baltimore",
         },
@@ -73,7 +75,7 @@ export const doctors=[
         specialty: "Psychiatrist",
         avgRating: 4.5,
         totalRating: 330,
-        photo: {},
+        photo: doc1,
         totalPatients: 1800,
         hospital: "McLean Hospital, Belmont",
         },
@@ -84,7 +86,7 @@ export const doctors=[
         specialty: "Gastroenterologist",
         avgRating: 4.6,
         totalRating: 270,
-        photo: {},
+        photo: doc1,
         totalPatients: 2100,
         hospital: "Cleveland Clinic",
         },
@@ -95,7 +97,7 @@ export const doctors=[
         specialty: "Endocrinologist",
         avgRating: 4.8,
         totalRating: 340,
-        photo: {},
+        photo: doc1,
         totalPatients: 1750,
         hospital: "Massachusetts General Hospital",
         },
@@ -106,7 +108,7 @@ export const doctors=[
         specialty: "Pulmonologist",
         avgRating: 4.9,
         totalRating: 360,
-        photo: {},
+        photo: doc1,
         totalPatients: 2300,
         hospital: "Brigham and Women's Hospital, Boston",
         }
