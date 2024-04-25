@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import doc1 from "../../assets/images/doc1.jpg";
 import star from "../../assets/images/star.png";
 
 const DoctorDetails = () => {
+  const [tab, setTab] = useState("about");
   return (
     <section>
       <div className="max-w-[1170px] px-5 mx-auto">
@@ -22,10 +23,43 @@ const DoctorDetails = () => {
               <div className="flex items-center gap-[6px]">
                 <span lassName="flex items-center gap-[6px] text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-semibold text-headingColor">
                   <img src={star} alt="star-icon" className="h-[20px]" />
+                  4.8
+                </span>
+                <span className="text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-semibold text-textColor">
+                  (272)
                 </span>
               </div>
+              <p className="text_para text-[14px] leading-5 md:text-[15px] max-w-[390px]">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi,
+                veritatis?
+              </p>
             </div>
+
+            <div className="mt-[50px] border-b border-solid border-[#0066ff34]">
+              <button
+                onClick={() => setTab("about")}
+                className={`${
+                  tab === "about" && "border-b border-solid border-primaryColor"
+                }py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}
+              >
+                About
+              </button>
+
+              <button
+                onClick={() => setTab("feedback")}
+                className={`${
+                  tab === "feedback" &&
+                  "border-b border-solid border-primaryColor"
+                }py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}
+              >
+                Feedback
+              </button>
+            </div>
+
+            <div className="mt-[50px]"></div>
           </div>
+
+          <div></div>
         </div>
       </div>
     </section>
