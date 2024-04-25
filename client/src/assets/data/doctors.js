@@ -1,6 +1,6 @@
-import doc1 from "../images/doc1.jpg";
-import doc2 from "../images/doc2.jpg";
-import doc3 from "../images/doc3.jpg";
+import doc1 from "./../../assets/images/doc1.jpg";
+import doc2 from "./../../assets/images/doc2.jpg";
+import doc3 from "./../../assets/images/doc3.jpg";
 
 export const doctors=[
     {
