@@ -21,7 +21,7 @@ export const services =[
           name: "Oncology",
           desc: "Compassionate cancer care and treatment. Our oncologists specialize in diagnosing and treating various types of cancer, offering personalized treatment plans and support for patients.",
           bgColor: "rgba(255, 255, 113, .2)",
-          textColor: "#FFFF71"
+          textColor: "#fda521"
         },
         {
           name: "Pediatrics",

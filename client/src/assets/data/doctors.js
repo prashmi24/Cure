@@ -1,6 +1,14 @@
 import doc1 from "./../../assets/images/doc1.jpg";
 import doc2 from "./../../assets/images/doc2.jpg";
 import doc3 from "./../../assets/images/doc3.jpg";
+import doc4 from "./../../assets/images/doc4.jpg";
+import doc5 from "./../../assets/images/doc5.jpg";
+import doc6 from "./../../assets/images/doc6.jpg";
+import doc7 from "./../../assets/images/doc7.jpg";
+import doc8 from "./../../assets/images/doc8.jpg";
+import doc9 from "./../../assets/images/doc9.jpg";
+import doc10 from "./../../assets/images/doc10.jpg";
+
 
 export const doctors=[
     {
@@ -42,7 +50,7 @@ export const doctors=[
         specialty: "Orthopedic Surgeon",
         avgRating: 4.8,
         totalRating: 350,
-        photo: doc1,
+        photo: doc4,
         totalPatients: 2200,
         hospital: "Mayo Clinic, Rochester",
         },
@@ -53,7 +61,7 @@ export const doctors=[
         specialty: "Oncologist",
         avgRating: 4.9,
         totalRating: 300,
-        photo: doc1,
+        photo: doc5,
         totalPatients: 1900,
         hospital: "MD Anderson Cancer Center, Houston",
         },
@@ -64,7 +72,7 @@ export const doctors=[
         specialty: "Neurologist",
         avgRating: 4.7,
         totalRating: 290,
-        photo: doc1,
+        photo: doc6,
         totalPatients: 1600,
         hospital: "Johns Hopkins Hospital, Baltimore",
         },
@@ -75,7 +83,7 @@ export const doctors=[
         specialty: "Psychiatrist",
         avgRating: 4.5,
         totalRating: 330,
-        photo: doc1,
+        photo: doc7,
         totalPatients: 1800,
         hospital: "McLean Hospital, Belmont",
         },
@@ -86,7 +94,7 @@ export const doctors=[
         specialty: "Gastroenterologist",
         avgRating: 4.6,
         totalRating: 270,
-        photo: doc1,
+        photo: doc8,
         totalPatients: 2100,
         hospital: "Cleveland Clinic",
         },
@@ -97,7 +105,7 @@ export const doctors=[
         specialty: "Endocrinologist",
         avgRating: 4.8,
         totalRating: 340,
-        photo: doc1,
+        photo: doc9,
         totalPatients: 1750,
         hospital: "Massachusetts General Hospital",
         },
@@ -108,7 +116,7 @@ export const doctors=[
         specialty: "Pulmonologist",
         avgRating: 4.9,
         totalRating: 360,
-        photo: doc1,
+        photo: doc10,
         totalPatients: 2300,
         hospital: "Brigham and Women's Hospital, Boston",
         }

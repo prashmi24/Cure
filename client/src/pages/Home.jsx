@@ -4,6 +4,7 @@ import icon1 from "../assets/images/icon1.png";
 import icon2 from "../assets/images/icon2.png";
 import icon3 from "../assets/images/icon3.png";
 import { Link } from "react-router-dom";
+import { FaRegArrowAltCircleRight } from "react-icons/fa";
 import { BsArrowRight } from "react-icons/bs";
 import About from "../components/About/About";
 import ServiceList from "../components/Services/ServiceList";
@@ -22,39 +23,46 @@ const Home = () => {
             <div>
               <div className="lg:w-[570px]">
                 <h1 className="text-[36px] leading-[46px] text-headingColor font-[800] md:text-[60px] md:leading-[70px]">
-                  We help patients live a healthy, longer life
+                  Book your next healthcare appointment with
+                  <span className="text-primaryColor"> Cure!</span>
                 </h1>
                 <p className="text-para">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. In
-                  quia molestiae nulla deserunt sit nemo maxime, deleniti,
-                  repellat, debitis quidem dolor recusandae magni eligendi
-                  fugiat!
+                  Are you in need of medical assistance? Look no further! With
+                  Cure, you can easily schedule appointments with trusted
+                  doctors in your area. Our user-friendly platform connects you
+                  with a wide range of healthcare professionals, ensuring that
+                  you find the perfect match for your needs.
                 </p>
-                <button className="btn">Request an Appointment</button>
+                <button className="btn flex items-center gap-[3px]">
+                  Request an Appointment
+                  <span>
+                    <FaRegArrowAltCircleRight />
+                  </span>
+                </button>
               </div>
 
               <div className="mt-[30px] lg:mt-[70px] flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-[30px]">
                 <div>
                   <h2 className="text-[36px] leading-[56px] lg:text-[44px] lg:leading-[54px] font-[700] text-headingColor">
-                    30+
+                    10+
                   </h2>
-                  <span className="w-[100px] h-2 bg-yellowColor rounded-full block mt-[-14px]"></span>
+                  <span className="w-[100px] h-2 bg-[#fda521] rounded-full block mt-[-14px]"></span>
                   <p className="text-para">Years of Experience</p>
                 </div>
 
                 <div>
                   <h2 className="text-[36px] leading-[56px] lg:text-[44px] lg:leading-[54px] font-[700] text-headingColor">
-                    15+
+                    150+
                   </h2>
                   <span className="w-[100px] h-2 bg-purpleColor rounded-full block mt-[-14px]"></span>
-                  <p className="text-para">Clinic Location</p>
+                  <p className="text-para">Expert Doctors</p>
                 </div>
 
                 <div>
                   <h2 className="text-[36px] leading-[56px] lg:text-[44px] lg:leading-[54px] font-[700] text-headingColor">
                     100%
                   </h2>
-                  <span className="w-[100px] h-2 bg-irisBlueColor rounded-full block mt-[-14px]"></span>
+                  <span className="w-[100px] h-2 bg-[#0a7273] rounded-full block mt-[-14px]"></span>
                   <p className="text-para">Patient Satisfaction</p>
                 </div>
               </div>
@@ -79,11 +87,11 @@ const Home = () => {
         <div className="container">
           <div className="lg:w-[470px] mx-auto">
             <h2 className="heading text-center">
-              Providing the best medical services
+              We prioritize your health & convenience
             </h2>
             <p className="text-para text-center">
-              World-class care for everyone. Our health system offers unmatched,
-              expert health care.
+              Simply log on to a website or app and book an appointment from
+              anywhere, at any time!
             </p>
           </div>
 
@@ -98,8 +106,10 @@ const Home = () => {
                   Find a Doctor
                 </h2>
                 <p className="text-[16px] leading-7 text-textColor font-[400] mt-4 text-center">
-                  World-class care for everyone. Our health system offers
-                  unmatched, expert health care.
+                  Explore profiles of doctors near you, complete with detailed
+                  information about their specialties, qualifications, and
+                  availability. Read reviews from other patients to make an
+                  informed decision.
                 </p>
 
                 <Link
@@ -121,8 +131,9 @@ const Home = () => {
                   Find a Location
                 </h2>
                 <p className="text-[16px] leading-7 text-textColor font-[400] mt-4 text-center">
-                  World-class care for everyone. Our health system offers
-                  unmatched, expert health care.
+                  Enter your location and the type of doctor you're looking for.
+                  Whether it's a primary care physician, a specialist, or a
+                  dentist, we've got you covered.
                 </p>
 
                 <Link
@@ -144,8 +155,9 @@ const Home = () => {
                   Book Appointment
                 </h2>
                 <p className="text-[16px] leading-7 text-textColor font-[400] mt-4 text-center">
-                  World-class care for everyone. Our health system offers
-                  unmatched, expert health care.
+                  Once you've found the right doctor, simply select a convenient
+                  time slot from their schedule and book your appointment
+                  instantly. No more waiting on hold or playing phone tag.
                 </p>
 
                 <Link
@@ -167,10 +179,12 @@ const Home = () => {
       <section>
         <div className="container">
           <div className="xl:w-[470px] mx-auto">
-            <h2 className="heading text-center">Our medical services</h2>
+            <h2 className="heading text-center">
+              Explore Our Healthcare Offerings
+            </h2>
             <p className="text-para text-center">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione,
-              alias.
+              From primary care physicians to specialists in fields such as
+              cardiology, dermatology, and pediatrics, we've got you covered.
             </p>
           </div>
 
@@ -183,17 +197,23 @@ const Home = () => {
           <div className="flex items-center justify-between flex-col lg:flex-row">
             <div className="xl:w-[670px]">
               <h2 className="heading">
-                Get virtual treatment <br />
-                anytime.
+                Convenient Features for Seamless Experience
               </h2>
               <ul className="pl-4">
                 <li className="text-para">
-                  1. Schedule the appointment directly
+                  <strong className="text-primaryColor">ReminderGuard:</strong>
+                  Stay on Track with Appointment Reminders
                 </li>
                 <li className="text-para">
-                  2. Search for your physician here and contact their office
+                  <strong className="text-primaryColor">SecurePay Plus:</strong>
+                  Hassle-Free, Secure Payment Options
                 </li>
-                <li className="text-para">3. View our physicians who are...</li>
+                <li className="text-para">
+                  <strong className="text-primaryColor">
+                    AnytimeCare Access:
+                  </strong>
+                  24/7 Appointment Booking Convenience
+                </li>
               </ul>
               <Link to="/">
                 <button className="btn">Learn more</button>
@@ -202,33 +222,6 @@ const Home = () => {
 
             <div className="relative z-10 xl:w-[770px] flex justify-end mt-[50px] lg:mt-0">
               <img src={feature} alt="feature_img" className="w-fit" />
-
-              {/* <div className="w-[150px] lg:w-[248px] bg-white absolute bottom-[50px] left-0 md:bottom-[100px] md:left-5 z-20 pb-2 pb-3 lg:pt-4 lg:px-4 lg:pb-[26px] rounded-[10px]">
-                <div className="flex items-center justify-between ">
-                  <div className="flex items-center gap-[6px] lg:gap-3">
-                    <p className="text-[10px] leading-[10px] lg:text-[14px] lg:leading-5 text-headingColor font-[600]">
-                      Mon, 24
-                    </p>
-                    <p className="text-[10px] leading-[10px] lg:text-[14px] lg:leading-5 text-headingColor font-[600]">
-                      12:00 PM
-                    </p>
-                  </div>
-                  <span className="w-5 h-5 lg:w-[34px] lg:h-[34px] flex items-center justify-center bg-yellowColor rounded py-1 px-[6px] lg:py-3 lg:px-[9px]">
-                    <img src="" alt="video-icon" />
-                  </span>
-                </div>
-
-                <div className="w-[65px] lg:w-[96px] bg-[#CCFOF3] py-1 px-2 lg:py-[6px] lg:px-[10px] text-[8px] leading-[8px] lg:text-[12px] lg-leading-4 text-irisBlueColor font-[500] mt-2 lg:mt-4 rounded-full">
-                  Consultation
-                </div>
-
-                <div className="flex items-center gap-[6px] lg:gap-[10px] mt-2 lg:mt-[18px]">
-                  <img src="" alt="avatar-icon" />
-                  <h4 className="ext-[10px] leading-3 lg:text-[16px] lg:leading-[22px] font-[700] text-headingColor">
-                    Wayne Collins
-                  </h4>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>
@@ -237,10 +230,14 @@ const Home = () => {
       <section>
         <div className="container">
           <div className="xl:w-[470px] mx-auto">
-            <h2 className="heading text-center">Our great doctors</h2>
+            <h2 className="heading text-center">
+              Meet Our Healthcare Providers
+            </h2>
             <p className="text-para text-center">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione,
-              alias.
+              At Cure, we're committed to connecting you with healthcare
+              providers who prioritize your health and wellness. Explore our
+              profiles to find the perfect match for your healthcare needs, and
+              take the first step towards a healthier tomorrow.
             </p>
           </div>
           <DoctorsList />
@@ -268,10 +265,12 @@ const Home = () => {
       <section>
         <div className="container">
           <div className="xl:w-[470px] mx-auto">
-            <h2 className="heading text-center">What our patients say</h2>
+            <h2 className="heading text-center">
+              Our doctors have earned over 5,000+ reviews on Google!
+            </h2>
             <p className="text-para text-center">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione,
-              alias.
+              Hear directly from other patients about their experiences with our
+              healthcare providers.
             </p>
           </div>
           <Testimonial></Testimonial>

@@ -7,7 +7,7 @@ const FaqItem = ({ item }) => {
     setIsOpen(!isOpen);
   };
   return (
-    <div className="p-3 lg:p-5 rounded-[12px] border border-solid border-[#D9DCE2] mb-5 cursor-pointer">
+    <div className="p-3 lg:p-5 rounded-[12px] border border-solid border-[#D9DCE2] mb-5 cursor-pointer bg-[#e9e3d5]">
       <div
         className="flex items-center justify-between gap-5"
         onClick={toggleAccordion}
@@ -18,7 +18,7 @@ const FaqItem = ({ item }) => {
         <div
           className={`${
             isOpen && "bg-primaryColor text-white border-none"
-          }w-7 h-7 lg:w-8 lg:h-8 border border-solid border-[#141F21] rounded flex items-center justify-center`}
+          }w-7 h-7 lg:w-8 lg:h-8 border border-solid border-[#141F21] rounded-full flex items-center justify-center`}
         >
           {isOpen ? <AiOutlineMinus /> : <AiOutlinePlus />}
         </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import icon from "../../assets/images/icon.png";
 import { Link } from "react-router-dom";
 import { RiTwitterFill } from "react-icons/ri";
 import { AiFillYoutube, AiOutlineInstagram } from "react-icons/ai";
@@ -52,18 +53,22 @@ const quickLinks02 = [
   },
   {
     path: "/",
-    display: "  Got a Opinion",
+    display: "Write a Review",
   },
 ];
 
 const quickLinks03 = [
   {
-    path: "/",
-    display: "Donate",
-  },
-  {
     path: "/contact",
     display: "Contact Us",
+  },
+  {
+    path: "/",
+    display: "Privacy Policy",
+  },
+  {
+    path: "/",
+    display: "Terms of Service",
   },
 ];
 
@@ -74,7 +79,11 @@ const Footer = () => {
       <div className="container">
         <div className="flex justify-between flex-col md:flex-row flex-wrap gap-[30px]">
           <div>
-            <img src="" alt="logo" />
+            <img
+              src={icon}
+              alt="logo"
+              className="object-fit w-full h-[150px] rounded-full"
+            />
             <p className="text-[16px] leading-7 font-[400] text-textColor mt-4">
               Copyright &#169; {year} Rashmi
             </p>
@@ -102,7 +111,7 @@ const Footer = () => {
                 <li key={index} className="mb-4">
                   <Link
                     to={item.path}
-                    className="text-[16px] leading-7 font-[400] text-textColor"
+                    className="text-[16px] leading-7 font-[400] text-textColor hover:text-primaryColor"
                   >
                     {item.display}
                   </Link>
@@ -120,7 +129,7 @@ const Footer = () => {
                 <li key={index} className="mb-4">
                   <Link
                     to={item.path}
-                    className="text-[16px] leading-7 font-[400] text-textColor"
+                    className="text-[16px] leading-7 font-[400] text-textColor hover:text-primaryColor"
                   >
                     {item.display}
                   </Link>
@@ -138,7 +147,7 @@ const Footer = () => {
                 <li key={index} className="mb-4">
                   <Link
                     to={item.path}
-                    className="text-[16px] leading-7 font-[400] text-textColor"
+                    className="text-[16px] leading-7 font-[400] text-textColor hover:text-primaryColor"
                   >
                     {item.display}
                   </Link>
