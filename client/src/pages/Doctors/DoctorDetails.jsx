@@ -3,6 +3,7 @@ import doc1 from "../../assets/images/doc1.jpg";
 import star from "../../assets/images/star.png";
 import DoctorAbout from "./DoctorAbout";
 import Feedback from "./Feedback";
+import SidePanel from "./SidePanel";
 
 const DoctorDetails = () => {
   const [tab, setTab] = useState("about");
@@ -31,7 +32,7 @@ const DoctorDetails = () => {
                   (272)
                 </span>
               </div>
-              <p className="text_para text-[14px] leading-5 md:text-[15px] max-w-[390px]">
+              <p className="text-para text-[14px] leading-5 md:text-[15px] max-w-[390px]">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi,
                 veritatis?
               </p>
@@ -64,7 +65,9 @@ const DoctorDetails = () => {
             </div>
           </div>
 
-          <div></div>
+          <div>
+            <SidePanel />
+          </div>
         </div>
       </div>
     </section>
