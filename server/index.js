@@ -21,10 +21,7 @@ import authRoute from "./routes/auth.js";
 mongoose.set('strictQuery', false);
 const connectDB =async()=>{
    try{
-      await mongoose.connect(process.env.MONGO_URL,{
-         NewUrlParser: true,
-         UnifiedTopology:true
-      });
+      await mongoose.connect(process.env.MONGO_URL)
       console.log("Database is connected");
 
    }catch (err){

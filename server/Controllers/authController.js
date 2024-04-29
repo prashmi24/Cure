@@ -1,7 +1,7 @@
-import UserSchema from "../models/userSchema.js";
-import doctorSchema from "../models/doctorSchema";
+import User from "../models/userSchema.js";
+import Doctor from "../models/doctorSchema.js";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt.js";
+import bcrypt from "bcryptjs";
 
 export const register = async(req, res)=>{
 
@@ -9,12 +9,13 @@ export const register = async(req, res)=>{
     try {
         let user=null;
         if(role==='patient'){
-            user= await UserSchema.findOne({email})
+            user= await User.findOne({email})
         }
         else if(role==='doctor'){
-            user= await doctorSchema.findOne({email})
+            user= await Doctor.findOne({email})
         }
 
+        // if user already exists
         if(user){
             return res.status(400).json({message: "User already exists"})
         }
@@ -25,7 +26,7 @@ export const register = async(req, res)=>{
         const hashPassword = await bcrypt.hash(password, salt);
 
         if(role==='patient'){
-            user=new UserSchema({
+            user=new User({
                 name, 
                 email,
                 password:hashPassword,
@@ -36,7 +37,7 @@ export const register = async(req, res)=>{
         }
         
         if(role==='doctor'){
-            user=new doctorSchema({
+            user=new Doctor({
                 name, 
                 email,
                 password:hashPassword,
