@@ -1,9 +1,9 @@
-import User from "../models/userSchema";
+import User from "../models/userSchema.js";
 
 export const updateUser = async (req, res) => {
   const id = req.params.id;
   try {
-    const updateUser = await User.findByIdAndUpdate(
+    const updatedUser = await User.findByIdAndUpdate(
       id,
       { $set: req.body },
       { new: true }
@@ -11,12 +11,10 @@ export const updateUser = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Successfully updated",
-      data: updateUser,
+      data: updatedUser,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ success: false, message: "Failed to update", data: updateUser });
+    res.status(500).json({ success: false, message: "Failed to update" });
   }
 };
 
@@ -30,10 +28,10 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-export const geteSingleUser = async (req, res) => {
+export const getSingleUser = async (req, res) => {
   const id = req.params.id;
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id).select("-password");
     res.status(200).json({ success: true, message: "User found", data: user });
   } catch (error) {
     res.status(404).json({ success: false, message: "No user found" });
@@ -42,7 +40,7 @@ export const geteSingleUser = async (req, res) => {
 
 export const getAllUser = async (req, res) => {
   try {
-    const users = await User.find({});
+    const users = await User.find({}).select("-password");
     res.status(200).json({ success: true, message: "User found", data: users });
   } catch (error) {
     res.status(404).json({ success: false, message: "No user found" });
