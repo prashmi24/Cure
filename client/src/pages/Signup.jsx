@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import signup from "../assets/images/signup.png";
 import uploadImageToCloudinary from "../utils/uploadCloudinary.js";
@@ -10,6 +10,7 @@ const Signup = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewURL, setPreviewURL] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -20,19 +21,18 @@ const Signup = () => {
     photo: selectedFile,
   });
 
-  const navigate = useNavigate();
-
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleFileInputChange = async (event) => {
     const file = event.target.files[0];
+
     const data = await uploadImageToCloudinary(file);
 
     setPreviewURL(data.url);
     setSelectedFile(data.url);
-    setFormData({ ...formData, photo: data.url });
+    // setFormData({ ...formData, photo: data.url });
   };
 
   const submitHandler = async (event) => {
@@ -41,12 +41,13 @@ const Signup = () => {
 
     try {
       const res = await fetch(`${BASE_URL}/auth/register`, {
-        method: "post",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
+
       const { message } = await res.json();
       if (!res.ok) {
         throw new Error(message);
@@ -55,7 +56,7 @@ const Signup = () => {
       toast.success(message);
       navigate("/login");
     } catch (error) {
-      toast.error(err.message);
+      toast.error(error.message);
       setLoading(false);
     }
   };
@@ -118,10 +119,7 @@ const Signup = () => {
               </div>
 
               <div className="mb-5 flex items-center justify-between">
-                <label
-                  htmlFor=""
-                  className="text-headingColor font-bold text-[16px] leading-7"
-                >
+                <label className="text-headingColor font-bold text-[16px] leading-7">
                   Are you a
                   <select
                     name="role"
@@ -186,7 +184,7 @@ const Signup = () => {
                   className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3"
                 >
                   {loading ? (
-                    <FadeLoader size={35} color="#ffffff" />
+                    <FadeLoader size={30} color="#ffffff" />
                   ) : (
                     "Signup"
                   )}
