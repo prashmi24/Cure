@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../config.js";
 import { toast } from "react-toastify";
 import { AuthContext } from "../context/AuthContext.jsx";
+import FadeLoader from "react-spinners/FadeLoader.js";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -92,7 +93,7 @@ const Login = () => {
               type="submit"
               className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3"
             >
-              Login
+              {loading ? <FadeLoader size={20} color="#ffffff" /> : " Login"}
             </button>
           </div>
 
