@@ -52,6 +52,7 @@ const Signup = () => {
       if (!res.ok) {
         throw new Error(message);
       }
+
       setLoading(false);
       toast.success(message);
       navigate("/login");

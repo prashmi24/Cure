@@ -27,7 +27,7 @@ const connectDB = async () => {
     await mongoose.connect(process.env.MONGO_URL);
     console.log("Database is connected");
   } catch (err) {
-    console.log("Database connection failed");
+    console.log("Database connection failed", err.message);
   }
 };
 
@@ -37,7 +37,7 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/users", userRoute);
-app.use("/api/v1/doctors", doctorRoute);
+app.use("/api/v1/doctor", doctorRoute);
 app.use("/api/v1/reviews", reviewRoute);
 
 app.listen(port, () => {
