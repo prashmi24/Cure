@@ -2,30 +2,35 @@ import React, { useState } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 
 const FaqItem = ({ item }) => {
+  // State to track whether the accordion is open or closed
   const [isOpen, setIsOpen] = useState(false);
+
+  // Function to toggle the accordion open or closed
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
   };
+
   return (
-    <div className="p-3 lg:p-5 rounded-[12px] border border-solid border-[#D9DCE2] mb-5 cursor-pointer bg-[#e9e3d5]">
+    <div className="p-3 lg:p-5 rounded-[12px] border border-solid border-gray-300 mb-5 cursor-pointer bg-[#e9e3d5]">
       <div
         className="flex items-center justify-between gap-5"
         onClick={toggleAccordion}
       >
-        <h4 className="text-[16px] leading-7 lg:text-[22px] lg:leading-8 text-headingColor">
-          {item.question}
-        </h4>
+        {/* Question */}
+        <h4 className="text-lg lg:text-xl text-gray-800  ">{item.question}</h4>
         <div
           className={`${
-            isOpen && "bg-primaryColor text-white border-none"
-          }w-7 h-7 lg:w-8 lg:h-8 border border-solid border-[#141F21] rounded-full flex items-center justify-center`}
+            isOpen && "border-none"
+          } w-8 h-8 lg:w-8 lg:h-8 border border-solid border-gray-700 rounded-full flex items-center justify-center`}
         >
           {isOpen ? <AiOutlineMinus /> : <AiOutlinePlus />}
         </div>
       </div>
+
+      {/* Content of the FAQ item (displayed when open) */}
       {isOpen && (
         <div className="mt-4">
-          <p className="text-[14px] leading-6 lg: text-[16px] lg:leading-7 font-[400] text-textColor">
+          <p className="text-base lg:text-lg font-normal text-gray-700">
             {item.content}
           </p>
         </div>
