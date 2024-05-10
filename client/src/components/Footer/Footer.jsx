@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { RiTwitterFill } from "react-icons/ri";
 import { AiFillYoutube, AiOutlineInstagram } from "react-icons/ai";
 
+// Define social media links
 const socialLinks = [
   {
     path: "",
@@ -26,7 +27,7 @@ const quickLinks01 = [
   },
   {
     path: "/",
-    display: "About Us",
+    display: "About Cure",
   },
   {
     path: "/services",
@@ -40,12 +41,12 @@ const quickLinks01 = [
 
 const quickLinks02 = [
   {
-    path: "/find-a-doctor",
+    path: "/doctor",
     display: "Find a Doctor",
   },
   {
-    path: "/",
-    display: "Request an Appointment",
+    path: "/doctor",
+    display: "Book an Appointment",
   },
   {
     path: "/",
@@ -70,34 +71,46 @@ const quickLinks03 = [
     path: "/",
     display: "Terms of Service",
   },
+  {
+    path: "/",
+    display: "Careers",
+  },
 ];
 
 const Footer = () => {
+  // Get current year for the copyright
   const year = new Date().getFullYear();
   return (
     <footer className="pb-16 pt-10">
       <div className="container">
         <div className="flex justify-between flex-col md:flex-row flex-wrap gap-[30px]">
+          {/* Logo and copyright */}
           <div>
             <img
               src={icon}
               alt="logo"
               className="object-fit w-full h-[150px] rounded-full"
             />
-            <p className="text-[16px] leading-7 font-[400] text-textColor mt-4">
-              Copyright &#169; {year} Rashmi
+            <p className="text-sm leading-7 font-[400] text-textColor mt-4">
+              Copyright &#169; {year} Cure
             </p>
+            {/* Social media links */}
 
-            <div className="flex items-center gap-3 mt-4">
-              {socialLinks.map((link, index) => (
-                <Link
-                  to={link.path}
-                  key={index}
-                  className="w-9 h-9 border border-solid border-[#181a1e] rounded-full flex items-center justify-center group hover:bg-primaryColor hover:border-none"
-                >
-                  {link.icon}
-                </Link>
-              ))}
+            <div>
+              <h2 className="text-[20px] leading-[30px] font-[700] mb-4 text-headingColor">
+                Follow us on
+              </h2>
+              <div className="flex items-center gap-3 mt-4">
+                {socialLinks.map((link, index) => (
+                  <Link
+                    to={link.path}
+                    key={index}
+                    className="w-9 h-9 border border-solid border-[#181a1e] rounded-full flex items-center justify-center group hover:bg-primaryColor hover:border-none"
+                  >
+                    {link.icon}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
 
