@@ -3,6 +3,7 @@ import logo from "../../assets/images/icon.png";
 import { NavLink, Link } from "react-router-dom";
 import { CgMenuGridO } from "react-icons/cg";
 import { AuthContext } from "../../context/AuthContext.jsx";
+import { FaUser } from "react-icons/fa6";
 
 const navLinks = [
   {
@@ -24,10 +25,14 @@ const navLinks = [
 ];
 
 const Header = () => {
+  // Refs for sticky header and mobile menu
   const headerRef = useRef(null);
   const menuRef = useRef(null);
+
+  // Context for user authentication
   const { user, role, token } = useContext(AuthContext);
 
+  // Function to handle sticky header
   const handleStickyHeader = () => {
     window.addEventListener("scroll", () => {
       if (
@@ -46,6 +51,7 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleStickyHeader);
   });
 
+  // Function to toggle mobile menu
   const toggleMenu = () => menuRef.current.classList.toggle("show_menu");
 
   return (
@@ -57,7 +63,7 @@ const Header = () => {
             <img src={logo} alt="logo" />
           </div>
 
-          {/* menu */}
+          {/* Navigation */}
           <div className="navigation" ref={menuRef} onClick={toggleMenu}>
             <ul className="menu flex items-center gap-[2.7rem]">
               {navLinks.map((link, index) => (
@@ -77,11 +83,12 @@ const Header = () => {
             </ul>
           </div>
 
-          {/* nav right */}
+          {/* side navbar */}
 
           <div className="flex items-center gap-4">
             {token && user ? (
               <div>
+                {/* Conditional rendering based on authentication */}
                 <Link
                   to={`${
                     role === "doctor"
@@ -89,7 +96,9 @@ const Header = () => {
                       : "users/profile/me"
                   }`}
                 >
-                  <figure className="w-[35px] h-[35px] rounded-full cursor-pointer"></figure>
+                  <figure>
+                    <FaUser className="w-5 h-5 cursor-pointer text-primaryColor" />
+                  </figure>
                 </Link>
               </div>
             ) : (
