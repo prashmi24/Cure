@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 
 const FaqItem = ({ item }) => {
+  const { bgColor } = item;
   // State to track whether the accordion is open or closed
   const [isOpen, setIsOpen] = useState(false);
 
@@ -11,7 +12,10 @@ const FaqItem = ({ item }) => {
   };
 
   return (
-    <div className="p-3 lg:p-5 rounded-[12px] border border-solid border-gray-300 mb-5 cursor-pointer bg-[#e9e3d5]">
+    <div
+      className="p-3 lg:p-5 rounded-[12px] border border-solid border-gray-300 mb-5 cursor-pointer"
+      style={{ background: `${bgColor}` }}
+    >
       <div
         className="flex items-center justify-between gap-5"
         onClick={toggleAccordion}
@@ -21,7 +25,7 @@ const FaqItem = ({ item }) => {
         <div
           className={`${
             isOpen && "border-none"
-          } w-8 h-8 lg:w-8 lg:h-8 border border-solid border-gray-700 rounded-full flex items-center justify-center`}
+          } w-8 h-8 lg:w-8 lg:h-8  rounded-full flex items-center justify-center`}
         >
           {isOpen ? <AiOutlineMinus /> : <AiOutlinePlus />}
         </div>
