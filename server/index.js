@@ -19,7 +19,7 @@ app.use(cookieParser());
 // CORS Setup
 app.use(
   cors({
-    origin: ["https://cure-server.vercel.app/"],
+    origin: [""],
     methods: ["POST", "GET"],
     credentials: true,
   })
