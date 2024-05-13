@@ -12,6 +12,11 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 8000;
 
+//  middleware
+app.use(express.json());
+app.use(cookieParser());
+
+// CORS Setup
 app.use(
   cors({
     origin: ["https://cure-server.vercel.app/"],
@@ -19,15 +24,6 @@ app.use(
     credentials: true,
   })
 );
-
-const corsOptions = {
-  origin: true,
-};
-
-app.get("/", (req, res) => {
-  res.json("Api is working");
-  // res.send("Api is working");
-});
 
 //  database connection
 mongoose.set("strictQuery", false);
@@ -40,10 +36,13 @@ const connectDB = async () => {
   }
 };
 
-//  middleware
-app.use(express.json());
-app.use(cookieParser());
-app.use(cors(corsOptions));
+// Routes
+app.get("/", (req, res) => {
+  res.status(200).json("Api is working");
+});
+
+// Route Middleware
+// app.use(cors(corsOptions));
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/doctor", doctorRoute);
