@@ -4,7 +4,8 @@ import { dateFormat } from "../../utils/dateFormat";
 const Appointments = ({ appointments }) => {
   return (
     <table className="w-full text-left text-sm text-gray-500">
-      <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+      {/* Table Header */}
+      <thead className="text-xs text-white uppercase bg-yellowColor">
         <tr>
           <th scope="col" className="px-6 py-3">
             Name
@@ -13,10 +14,10 @@ const Appointments = ({ appointments }) => {
             Gender
           </th>
           <th scope="col" className="px-6 py-3">
-            Payment
+            Payment Status
           </th>
           <th scope="col" className="px-6 py-3">
-            Price
+            Payment Amount
           </th>
           <th scope="col" className="px-6 py-3">
             Booked on
@@ -24,9 +25,11 @@ const Appointments = ({ appointments }) => {
         </tr>
       </thead>
 
+      {/* Table Body */}
       <tbody>
         {appointments?.map((item) => (
           <tr key={item._id}>
+            {/* User Info */}
             <th
               scope="row"
               className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap"
@@ -43,8 +46,9 @@ const Appointments = ({ appointments }) => {
                 </div>
               </div>
             </th>
-
+            {/* Gender */}
             <td className="px-6 py-4 ">{item.user.gender}</td>
+            {/* Payment Status */}
             <td className="px-6 py-4 ">
               {item.isPaid && (
                 <div className="flex items-center">
@@ -55,11 +59,15 @@ const Appointments = ({ appointments }) => {
               {!item.isPaid && (
                 <div className="flex items-center">
                   <div className="h-2.5 w-2.5 rounded-full bg-red mr-2"></div>
-                  UnPaid
+                  Unpaid
                 </div>
               )}
             </td>
+
+            {/* Fees */}
             <td className="px-6 py-4 ">{item.amount}</td>
+
+            {/* Booked On */}
             <td className="px-6 py-4 ">{dateFormat(item.createdAt)}</td>
           </tr>
         ))}

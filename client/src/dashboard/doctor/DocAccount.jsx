@@ -10,24 +10,35 @@ import DoctorProfileSettings from "./DoctorProfileSettings.jsx";
 import Appointments from "./Appointments.jsx";
 
 const DocAccount = () => {
+  // Fetching doctor profile data
   const { data, loading, error } = useGetProfile(
     `${BASE_URL}/doctor/profile/me`
   );
 
+  // State for managing active tab
   const [tab, setTab] = useState("overview");
 
   return (
     <section>
       <div className="max-w-[1170px] px-5 mx-auto">
+        {/* Loader while loading */}
         {loading && !error && <Loader />}
+
+        {/* Error message if error occurs */}
         {error && !loading && <Error />}
 
+        {/* Render data if loaded successfully */}
         {!loading && !error && (
           <div className="grid lg:grid-cols-3 gap-[30px] lg:gap-[50px]">
+            {/* Tabs for switching content */}
             <Tabs tab={tab} setTab={setTab} />
+
+            {/* Main content area */}
             <div className="lg:col-span-2">
+              {/* Pending approval message */}
               {data && data.isApproved === "pending" && (
                 <div className="flex p-4 mb-4 text-yellow-800 bg-yellow-50 rounded-lg">
+                  {/* Icon for info */}
                   <svg
                     aria-hidden="true"
                     className="flex-shrink-0 w-5 h-5"
@@ -42,20 +53,22 @@ const DocAccount = () => {
                     ></path>
                   </svg>
 
+                  {/* Message */}
                   <span className="sr-only">Info</span>
                   <div className="ml-3 ">
-                    To get approval please complete your profile. We'll review
-                    manually and approve within 3 days
+                    To get an approval please complete your profile. We'll
+                    review manually and approve within 3 days
                   </div>
                 </div>
               )}
 
+              {/* Main content based on active tab */}
               <div className="mt-8">
                 {tab === "overview" && (
                   <div>
-                    {" "}
                     <div className="flex items-center gap-4 mb-10">
                       <figure className="max-w-[200px] max-h-[200px]">
+                        {/* Doctor's profile image */}
                         <img
                           src={data?.photo}
                           alt="user-img"
@@ -63,14 +76,17 @@ const DocAccount = () => {
                         />
                       </figure>
                       <div>
-                        <span className="bg-[#ccf0f3] text-primaryColor py-1 px-4 lg:py-2 lg:px-6 rounded text-[12px] leading-4 lg:text-[16px] lg:leading-6 font-semibold">
+                        {/* Specialty */}
+                        <span className="bg-yellowColor text-white py-1 px-4 lg:py-2 lg:px-6 rounded text-[12px] leading-4 lg:text-[16px] lg:leading-6 font-semibold">
                           {data.specialty}
                         </span>
 
+                        {/* Doctor's name */}
                         <h3 className="text-[22px] leading-9 font-bold text-headingColor mt-3">
                           {data.name}
                         </h3>
 
+                        {/* Ratings */}
                         <div className="flex items-center gap-[6px]">
                           <span className="flex items-center gap-[6px] text-headingColor text-[14px] leading-5 lg:text-[16px] lg:leading-6 font-semibold">
                             <img src={star} alt="rating" className="h-[20px]" />
@@ -82,9 +98,12 @@ const DocAccount = () => {
                           </span>
                         </div>
 
+                        {/* Doctor's bio */}
                         <p className="text-para font-[15px] lg:max-w-[390px] leading-6">
                           {data?.bio}
                         </p>
+
+                        {/* Component for doctor's details */}
                         <DoctorAbout
                           name={data.name}
                           about={data.about}
@@ -96,6 +115,7 @@ const DocAccount = () => {
                   </div>
                 )}
 
+                {/* Rendering tabs */}
                 {tab === "appointments" && (
                   <Appointments appointments={data.appointments} />
                 )}

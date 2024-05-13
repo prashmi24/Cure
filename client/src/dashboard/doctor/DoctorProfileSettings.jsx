@@ -19,9 +19,12 @@ const DoctorProfileSettings = ({ doctorData }) => {
     timeSlots: [],
     about: "",
     photo: null,
+    otherSpecialty: "",
   });
 
   useEffect(() => {
+    // Update form data when doctor data changes
+    // For security reasons, password is not stored in form data
     setFormData({
       name: doctorData?.name,
       email: doctorData?.email,
@@ -35,20 +38,30 @@ const DoctorProfileSettings = ({ doctorData }) => {
       timeSlots: doctorData?.timeSlots,
       about: doctorData?.about,
       photo: doctorData?.photo,
+      otherSpecialty: "",
     });
   }, [doctorData]);
 
+  // Handle input change for form fields
+  // const handleInputChange = (e) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  // };
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
 
+  // Handle file input change for photo upload
   const handleFileInputChange = async (e) => {
     const file = e.target.files[0];
     const data = await uploadImageToCloudinary(file);
-    console.log(data);
     // setFormData({ ...formData, photo: data?.url });
   };
 
+  // Handle profile update submission
   const updateProfileHandler = async (e) => {
     e.preventDefault();
     try {
@@ -65,20 +78,30 @@ const DoctorProfileSettings = ({ doctorData }) => {
       if (!res.ok) {
         throw new Error(message);
       }
-
       toast.success(message);
     } catch (error) {
       toast.error(error.message);
     }
   };
 
+  // Add item to array field in form data
+  // const addItem = (key, item) => {
+  //   setFormData((prevFormData) => ({
+  //     ...prevFormData,
+  //     [key]: [...prevFormData[key], item],
+  //   }));
+  // };
   const addItem = (key, item) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [key]: [...prevFormData[key], item],
-    }));
+    setFormData((prevFormData) => {
+      const prevItems = prevFormData[key] || []; // Initialize as empty array if undefined
+      return {
+        ...prevFormData,
+        [key]: [...prevItems, item],
+      };
+    });
   };
 
+  // Handle input change for reusable form fields (qualifications, experiences, timeSlots)
   const handleReusableInputChange = (key, index, event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => {
@@ -91,6 +114,7 @@ const DoctorProfileSettings = ({ doctorData }) => {
     });
   };
 
+  // Delete item from array field in form data
   const deleteItem = (key, index) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -98,6 +122,7 @@ const DoctorProfileSettings = ({ doctorData }) => {
     }));
   };
 
+  // Add qualification item to form data
   const addQualification = (e) => {
     e.preventDefault();
     addItem("qualifications", {
@@ -112,11 +137,13 @@ const DoctorProfileSettings = ({ doctorData }) => {
     handleReusableInputChange("qualifications", index, event);
   };
 
+  // Delete qualification item from form data
   const deleteQualification = (e, index) => {
     e.preventDefault();
     deleteItem("qualifications", index);
   };
 
+  // Add experience item to form data
   const addExperience = (e) => {
     e.preventDefault();
     addItem("experiences", {
@@ -131,11 +158,13 @@ const DoctorProfileSettings = ({ doctorData }) => {
     handleReusableInputChange("experiences", index, event);
   };
 
+  // Delete experience item from form data
   const deleteExperience = (e, index) => {
     e.preventDefault();
     deleteItem("experiences", index);
   };
 
+  // Add time slot item to form data
   const addTimeSlot = (e) => {
     e.preventDefault();
     addItem("timeSlots", {
@@ -156,13 +185,17 @@ const DoctorProfileSettings = ({ doctorData }) => {
 
   return (
     <div>
+      {/* Profile Information */}
       <h2 className="text-headingColor font-bold text-[24px] leading-9 mb-10">
         Profile Information
       </h2>
 
       <form>
+        {/* Name */}
         <div className="mb-5">
-          <p className="form-label">Name*</p>
+          <p className="form-label">
+            Name<span className="text-red-500">*</span>
+          </p>
           <input
             type="text"
             name="name"
@@ -172,8 +205,12 @@ const DoctorProfileSettings = ({ doctorData }) => {
             className="form-input"
           />
         </div>
+
+        {/* Email */}
         <div className="mb-5">
-          <p className="form-label">Email*</p>
+          <p className="form-label">
+            Email<span className="text-red-500">*</span>
+          </p>
           <input
             type="text"
             name="email"
@@ -186,8 +223,12 @@ const DoctorProfileSettings = ({ doctorData }) => {
             disabled="true"
           />
         </div>
+
+        {/* Phone Number */}
         <div className="mb-5">
-          <p className="form-label">Phone*</p>
+          <p className="form-label">
+            Phone<span className="text-red-500">*</span>
+          </p>
           <input
             type="number"
             name="phone"
@@ -197,8 +238,12 @@ const DoctorProfileSettings = ({ doctorData }) => {
             className="form-input"
           />
         </div>
+
+        {/* Bio */}
         <div className="mb-5">
-          <p className="form-label">Bio*</p>
+          <p className="form-label">
+            Bio<span className="text-red-500">*</span>
+          </p>
           <input
             type="text"
             name="bio"
@@ -209,10 +254,13 @@ const DoctorProfileSettings = ({ doctorData }) => {
           />
         </div>
 
+        {/* Gender */}
         <div className="mb-5">
           <div className="grid grid-cols-3 gap-5 mb-[30px]">
             <div>
-              <p className="form-label">Gender</p>
+              <p className="form-label">
+                Gender<span className="text-red-500">*</span>
+              </p>
               <select
                 name="gender"
                 value={formData.gender}
@@ -224,23 +272,45 @@ const DoctorProfileSettings = ({ doctorData }) => {
                 <option value="other">Other</option>
               </select>
             </div>
-            {/* </div> */}
 
+            {/* Specialty */}
             <div>
-              <p className="form-label">Specialty</p>
+              <p className="form-label">
+                Specialty<span className="text-red-500">*</span>
+              </p>
               <select
                 name="specialty"
                 value={formData.specialty}
                 onChange={handleInputChange}
                 className="form-input py-3.5"
               >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="cardiology">Cardiology</option>
+                <option value="orthopedics">Orthopedics</option>
+                <option value="dermatology">Dermatology</option>
+                <option value="oncology">Oncology</option>
+                <option value="pediatrics">Pediatrics</option>
+                <option value="neurology">Neurology</option>
                 <option value="other">Other</option>
               </select>
+
+              {/* If "Other" is selected, show an additional input field */}
+              {formData.specialty === "other" && (
+                <input
+                  type="text"
+                  name="otherSpecialty"
+                  value={formData.otherSpecialty}
+                  onChange={handleInputChange}
+                  placeholder="Other Specialty"
+                  className="form-input py-3.5 mt-2 cursor-text"
+                />
+              )}
             </div>
+
+            {/* Amount */}
             <div>
-              <p className="form-label">Amount</p>
+              <p className="form-label">
+                Amount<span className="text-red-500">*</span>
+              </p>
               <input
                 name="amount"
                 placeholder="1000"
@@ -255,7 +325,10 @@ const DoctorProfileSettings = ({ doctorData }) => {
         {/* qualification */}
 
         <div className="mb-5">
-          <p className="form-label"> Qualifications*</p>
+          <p className="form-label">
+            {" "}
+            Qualifications<span className="text-red-500">*</span>
+          </p>
           {formData.qualifications?.map((item, index) => (
             <div key={index}>
               <div>
@@ -283,7 +356,9 @@ const DoctorProfileSettings = ({ doctorData }) => {
                 </div>
                 <div className="grid grid-cols-2 gap-5 mt-5">
                   <div>
-                    <p className="form-label">Degree*</p>
+                    <p className="form-label">
+                      Degree<span className="text-red-500">*</span>
+                    </p>
                     <input
                       type="text"
                       name="degree"
@@ -293,7 +368,9 @@ const DoctorProfileSettings = ({ doctorData }) => {
                     />
                   </div>
                   <div>
-                    <p className="form-label">University*</p>
+                    <p className="form-label">
+                      University<span className="text-red-500">*</span>
+                    </p>
                     <input
                       type="text"
                       name="university"
@@ -324,7 +401,10 @@ const DoctorProfileSettings = ({ doctorData }) => {
         {/* experience */}
 
         <div className="mb-5">
-          <p className="form-label"> Experience*</p>
+          <p className="form-label">
+            {" "}
+            Experience<span className="text-red-500">*</span>
+          </p>
           {formData.experiences?.map((item, index) => (
             <div key={index}>
               <div>
@@ -352,7 +432,9 @@ const DoctorProfileSettings = ({ doctorData }) => {
                 </div>
                 <div className="grid grid-cols-2 gap-5 mt-5">
                   <div>
-                    <p className="form-label">Position*</p>
+                    <p className="form-label">
+                      Position<span className="text-red-500">*</span>
+                    </p>
                     <input
                       type="text"
                       name="position"
@@ -362,7 +444,9 @@ const DoctorProfileSettings = ({ doctorData }) => {
                     />
                   </div>
                   <div>
-                    <p className="form-label">Hospital*</p>
+                    <p className="form-label">
+                      Hospital<span className="text-red-500">*</span>
+                    </p>
                     <input
                       type="text"
                       name="hospital"
@@ -393,13 +477,17 @@ const DoctorProfileSettings = ({ doctorData }) => {
         {/* timeslots */}
 
         <div className="mb-5">
-          <p className="form-label">Available Time Slots*</p>
+          <p className="form-label">
+            Available Time Slots<span className="text-red-500">*</span>
+          </p>
           {formData.timeSlots?.map((item, index) => (
             <div key={index}>
               <div>
                 <div className="grid grid-cols-2 md:grid-cols-4 mb-[30px] gap-5">
                   <div>
-                    <p className="form-label">Day*</p>
+                    <p className="form-label">
+                      Day<span className="text-red-500">*</span>
+                    </p>
 
                     <select
                       name="day"
@@ -459,7 +547,9 @@ const DoctorProfileSettings = ({ doctorData }) => {
         {/* about */}
 
         <div className="mb-5">
-          <p className="form-label">About*</p>
+          <p className="form-label">
+            About<span className="text-red-500">*</span>
+          </p>
           <textarea
             name="about"
             value={formData.about}
