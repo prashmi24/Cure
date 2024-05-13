@@ -48,6 +48,13 @@ app.use("/api/v1/users", userRoute);
 app.use("/api/v1/doctor", doctorRoute);
 app.use("/api/v1/reviews", reviewRoute);
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something went wrong!");
+});
+
+// Start the server
 app.listen(port, () => {
   connectDB();
   console.log("Server is running on port " + port);
