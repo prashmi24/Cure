@@ -14,7 +14,7 @@ const port = process.env.PORT || 8000;
 
 app.use(
   cors({
-    origin: ["https://cure-three.vercel.app/"],
+    origin: ["https://cure-server.vercel.app/"],
     methods: ["POST", "GET"],
     credentials: true,
   })
@@ -25,7 +25,8 @@ const corsOptions = {
 };
 
 app.get("/", (req, res) => {
-  res.send("Api is working");
+  res.json("Api is working");
+  // res.send("Api is working");
 });
 
 //  database connection
