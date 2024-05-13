@@ -1,12 +1,17 @@
 {
-    "version":2,
-    "builds":[
-        {"src": "*.js", "use": "@vercel/node"}
+    "version": 2,
+    "builds": [
+      { "src": "path/to/your/serverless/function.js", "use": "@vercel/node" }
     ],
     "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/"
-        }
+      {
+        "src": "/api/(.*)",
+        "dest": "/path/to/your/serverless/function" 
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/path/to/your/static/files" 
+      }
     ]
-}
+  }
+  
