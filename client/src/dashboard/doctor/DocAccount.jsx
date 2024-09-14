@@ -8,6 +8,7 @@ import star from "../../assets/images/star.png";
 import DoctorAbout from "./../../pages/Doctors/DoctorAbout.jsx";
 import DoctorProfileSettings from "./DoctorProfileSettings.jsx";
 import Appointments from "./Appointments.jsx";
+import { FaUser } from "react-icons/fa6";
 
 const DocAccount = () => {
   // Fetching doctor profile data
@@ -28,7 +29,7 @@ const DocAccount = () => {
         {error && !loading && <Error />}
 
         {/* Render data if loaded successfully */}
-        {!loading && !error && (
+        {!loading && !error && data && (
           <div className="grid lg:grid-cols-3 gap-[30px] lg:gap-[50px]">
             {/* Tabs for switching content */}
             <Tabs tab={tab} setTab={setTab} />
@@ -36,7 +37,7 @@ const DocAccount = () => {
             {/* Main content area */}
             <div className="lg:col-span-2">
               {/* Pending approval message */}
-              {data && data.isApproved === "pending" && (
+              {data.isApproved === "pending" && (
                 <div className="flex p-4 mb-4 text-yellow-800 bg-yellow-50 rounded-lg">
                   {/* Icon for info */}
                   <svg
@@ -70,45 +71,45 @@ const DocAccount = () => {
                       <figure className="max-w-[200px] max-h-[200px]">
                         {/* Doctor's profile image */}
                         <img
-                          src={data?.photo}
+                          src={data?.photo || FaUser}
                           alt="user-img"
-                          className="w-full"
+                          className="w-full object-cover"
                         />
                       </figure>
                       <div>
                         {/* Specialty */}
                         <span className="bg-yellowColor text-white py-1 px-4 lg:py-2 lg:px-6 rounded text-[12px] leading-4 lg:text-[16px] lg:leading-6 font-semibold">
-                          {data.specialty}
+                          {data?.specialty || "Specialty Unavailable"}
                         </span>
 
                         {/* Doctor's name */}
                         <h3 className="text-[22px] leading-9 font-bold text-headingColor mt-3">
-                          {data.name}
+                          {data?.name || "Doctor's Name"}
                         </h3>
 
                         {/* Ratings */}
                         <div className="flex items-center gap-[6px]">
                           <span className="flex items-center gap-[6px] text-headingColor text-[14px] leading-5 lg:text-[16px] lg:leading-6 font-semibold">
                             <img src={star} alt="rating" className="h-[20px]" />
-                            {data.avgRating}
+                            {data?.avgRating || 0}
                           </span>
 
                           <span className=" text-textColor text-[14px] leading-5 lg:text-[16px] lg:leading-6 font-semibold">
-                            {data.totalRating}
+                            {data?.totalRating || 0} reviews
                           </span>
                         </div>
 
                         {/* Doctor's bio */}
                         <p className="text-para font-[15px] lg:max-w-[390px] leading-6">
-                          {data?.bio}
+                          {data?.bio || "No bio available."}
                         </p>
 
                         {/* Component for doctor's details */}
                         <DoctorAbout
-                          name={data.name}
-                          about={data.about}
-                          qualifications={data.qualifications}
-                          experiences={data.experiences}
+                          name={data?.name || ""}
+                          about={data?.about || ""}
+                          qualifications={data?.qualifications || []}
+                          experiences={data?.experiences || []}
                         />
                       </div>
                     </div>
@@ -117,7 +118,7 @@ const DocAccount = () => {
 
                 {/* Rendering tabs */}
                 {tab === "appointments" && (
-                  <Appointments appointments={data.appointments} />
+                  <Appointments appointments={data?.appointments || []} />
                 )}
                 {tab === "settings" && (
                   <DoctorProfileSettings doctorData={data} />
