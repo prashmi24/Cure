@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 
-const FaqItem = ({ item }) => {
-  const { bgColor } = item;
+const FaqItem = ({ item: { question, content, bgColor } }) => {
   // State to track whether the accordion is open or closed
   const [isOpen, setIsOpen] = useState(false);
 
@@ -14,14 +13,17 @@ const FaqItem = ({ item }) => {
   return (
     <div
       className="p-3 lg:p-5 rounded-[12px] border border-solid border-gray-300 mb-5 cursor-pointer"
-      style={{ background: `${bgColor}` }}
+      style={{ background: bgColor }}
+      onClick={toggleAccordion}
+      tabIndex="0"
+      onKeyPress={(e) => e.key === "Enter" && toggleAccordion()}
+      role="button"
+      aria-expanded={isOpen}
+      aria-controls="faq-content"
     >
-      <div
-        className="flex items-center justify-between gap-5"
-        onClick={toggleAccordion}
-      >
+      <div className="flex items-center justify-between gap-5">
         {/* Question */}
-        <h4 className="text-lg lg:text-xl text-gray-800  ">{item.question}</h4>
+        <h4 className="text-lg lg:text-xl text-gray-800">{question}</h4>
         <div
           className={`${
             isOpen && "border-none"
@@ -33,9 +35,9 @@ const FaqItem = ({ item }) => {
 
       {/* Content of the FAQ item (displayed when open) */}
       {isOpen && (
-        <div className="mt-4">
+        <div className="mt-4" id="faq-content" accordian-open>
           <p className="text-base lg:text-lg font-normal text-gray-700">
-            {item.content}
+            {content}
           </p>
         </div>
       )}

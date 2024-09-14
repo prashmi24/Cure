@@ -3,12 +3,16 @@ import { faqs } from "./../../assets/data/faqs";
 import FaqItem from "./FaqItem";
 
 const FaqList = () => {
+  if (!faqs || faqs.length === 0) {
+    return <p>No FAQs available at the moment.</p>;
+  }
+
   return (
-    <ul className="mt-[38px]">
+    <section className="mt-[38px]">
       {faqs.map((item, index) => (
         <FaqItem item={item} key={index} />
       ))}
-    </ul>
+    </section>
   );
 };
 

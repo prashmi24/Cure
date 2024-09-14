@@ -21,24 +21,16 @@
     @apply text-[44px] leading-[54px] font-[700] text-headingColor;
   }
 
-  .text-para {
+  .text__para {
     @apply text-[18px] leading-[30px] font-[400] text-textColor mt-[18px];
   }
-  /* add image here */
-  /* .header {
-    @apply bg-[] bg-no-repeat bg-center bg-cover w-full h-[100px] leading-[100px];
-  } */
-
-  /* .hero-section{
-        @apply bg-[url('./assets/images/mask.png')]bg-no-repeat bg-center bg-cover;
-    } */
 
   .form-label {
     @apply text-textColor font-semibold text-[16px] leading-7 mb-2;
   }
 
   .form-input {
-    @apply w-full px-4 py-3 border border-solid border-[#0066ff61] focus:outline-none focus:border-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer rounded-md;
+    @apply w-full px-4 py-3 border border-solid border-[#FDA521] focus:outline-none focus:border-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer rounded-md;
   }
 }
 
@@ -47,7 +39,7 @@
     @apply w-full;
   }
 
-  .section {
+  section {
     @apply py-[35px];
   }
 }
@@ -57,7 +49,24 @@
     @apply text-[26px] leading-[36px];
   }
 
-  .text-para {
+  .text__para {
     @apply text-[16px] leading-7 mt-3;
   }
+}
+
+/* Accordian FAQ */
+
+@keyframes slideDown {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  100% {
+    height: auto;
+    opacity: 1;
+  }
+}
+
+.accordion-open {
+  animation: slideDown 0.3s ease-in-out;
 }

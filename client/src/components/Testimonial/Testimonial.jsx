@@ -31,17 +31,19 @@ const Testimonial = () => {
       >
         {/* Map over the testimonial data and render each testimonial within a Swiper slide */}
         {testimonials.map((testimonial) => (
-          <SwiperSlide>
-            <div className="py-[30px] px-5 rounded-[13px]">
+          <SwiperSlide key={testimonial.id || testimonial.name}>
+            <div className="py-[30px] px-5 rounded-[13px] bg-white shadow-md">
               <div className="flex items-center gap-[13px]">
-                <img
-                  src={testimonial.image}
-                  alt="patient"
-                  className="h-[50px] w-[50px] object-cover rounded-full"
-                />
+                {testimonial.image && (
+                  <img
+                    src={testimonial.image}
+                    alt={testimonial.name || "patient"}
+                    className="h-[50px] w-[50px] object-cover rounded-full"
+                  />
+                )}
                 <div>
                   <h4 className="text-[18px] leading-[30px] font-semibold text-headingColor">
-                    {testimonial.name}
+                    {testimonial.name || "Anonymous"}
                   </h4>
                   <div className="flex items-center gap-[2px]">
                     {/* Render star icons based on rating */}
@@ -57,9 +59,11 @@ const Testimonial = () => {
                 </div>
               </div>
 
-              <p className="text-[16px] leading-7 mt-4 text-textColor font-[400]">
-                {testimonial.content}
-              </p>
+              {testimonial.content && (
+                <p className="text-[16px] leading-7 mt-4 text-textColor font-[400]">
+                  {testimonial.content}
+                </p>
+              )}
             </div>
           </SwiperSlide>
         ))}

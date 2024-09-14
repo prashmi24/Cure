@@ -34,25 +34,27 @@ const Header = () => {
 
   // Function to handle sticky header
   const handleStickyHeader = () => {
-    window.addEventListener("scroll", () => {
-      if (
-        document.body.scollTop > 80 ||
-        document.documentElement.scrollTop > 80
-      ) {
-        headerRef.current.classList.add("sticky_header");
-      } else {
-        headerRef.current.classList.remove("sticky_header");
-      }
-    });
+    if (
+      document.body.scrollTop > 80 ||
+      document.documentElement.scrollTop > 80
+    ) {
+      headerRef.current.classList.add("sticky__header");
+    } else {
+      headerRef.current.classList.remove("sticky__header");
+    }
   };
 
   useEffect(() => {
-    handleStickyHeader();
+    window.addEventListener("scroll", handleStickyHeader);
     return () => window.removeEventListener("scroll", handleStickyHeader);
-  });
+  }, []);
 
   // Function to toggle mobile menu
-  const toggleMenu = () => menuRef.current.classList.toggle("show_menu");
+  const toggleMenu = () => {
+    if (window.innerWidth <= 768) {
+      menuRef.current.classList.toggle("show__menu");
+    }
+  };
 
   return (
     <header className="header flex items-center" ref={headerRef}>
@@ -60,7 +62,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* logo */}
           <div className="w-[100px] h-[100px] rounded-full">
-            <img src={logo} alt="logo" />
+            <img src={logo} alt="Cure logo" />
           </div>
 
           {/* Navigation */}
@@ -84,23 +86,18 @@ const Header = () => {
           </div>
 
           {/* side navbar */}
-
           <div className="flex items-center gap-4">
+            {/* Conditional rendering based on authentication */}
             {token && user ? (
-              <div>
-                {/* Conditional rendering based on authentication */}
-                <Link
-                  to={`${
-                    role === "doctor"
-                      ? "/doctor/profile/me"
-                      : "users/profile/me"
-                  }`}
-                >
-                  <figure>
-                    <FaUser className="w-5 h-5 cursor-pointer text-primaryColor" />
-                  </figure>
-                </Link>
-              </div>
+              <Link
+                to={`${
+                  role === "doctor" ? "/doctor/profile/me" : "users/profile/me"
+                }`}
+              >
+                <figure>
+                  <FaUser className="w-[35px] h-[35px] cursor-pointer text-primaryColor" />
+                </figure>
+              </Link>
             ) : (
               <Link to="/login">
                 <button className="bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]">
@@ -109,6 +106,7 @@ const Header = () => {
               </Link>
             )}
 
+            {/* Mobile menu toggle */}
             <span className="md:hidden" onClick={toggleMenu}>
               <CgMenuGridO className="w-6 h-6 cursor-pointer"></CgMenuGridO>
             </span>

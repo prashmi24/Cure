@@ -77,6 +77,26 @@ const quickLinks03 = [
   },
 ];
 
+const QuickLinksSection = ({ title, links }) => (
+  <div>
+    <h2 className="text-[20px] leading-[30px] font-[700] mb-6 text-headingColor">
+      {title}
+    </h2>
+    <ul>
+      {links.map((item, index) => (
+        <li key={index} className="mb-4">
+          <Link
+            to={item.path}
+            className="text-[16px] leading-7 font-[400] text-textColor hover:text-primaryColor"
+          >
+            {item.display}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
 const Footer = () => {
   // Get current year for the copyright
   const year = new Date().getFullYear();
@@ -88,86 +108,34 @@ const Footer = () => {
           <div>
             <img
               src={icon}
-              alt="logo"
-              className="object-fit w-full h-[150px] rounded-full"
+              alt="Cure logo"
+              className="object-fit w-auto h-[150px] rounded-full max-w-full"
             />
             <p className="text-sm leading-7 font-[400] text-textColor mt-4">
               Copyright &#169; {year} Cure
             </p>
             {/* Social media links */}
-
-            <div>
-              <h2 className="text-[20px] leading-[30px] font-[700] mb-4 text-headingColor">
-                Follow us on
-              </h2>
-              <div className="flex items-center gap-3 mt-4">
-                {socialLinks.map((link, index) => (
-                  <Link
-                    to={link.path}
-                    key={index}
-                    className="w-9 h-9 border border-solid border-[#181a1e] rounded-full flex items-center justify-center group hover:bg-primaryColor hover:border-none"
-                  >
-                    {link.icon}
-                  </Link>
-                ))}
-              </div>
+            <h2 className="text-[20px] leading-[30px] font-[700] mb-4 text-headingColor">
+              Follow us on
+            </h2>
+            <div className="flex items-center gap-3 mt-4">
+              {socialLinks.map((link, index) => (
+                <a
+                  href={link.path}
+                  key={index}
+                  className="w-9 h-9 border border-solid border-[#181a1e] rounded-full flex items-center justify-center group hover:bg-primaryColor hover:border-none"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {link.icon}
+                </a>
+              ))}
             </div>
           </div>
 
-          <div>
-            <h2 className="text-[20px] leading-[30px] font-[700] mb-6 text-headingColor">
-              Quick Links
-            </h2>
-
-            <ul>
-              {quickLinks01.map((item, index) => (
-                <li key={index} className="mb-4">
-                  <Link
-                    to={item.path}
-                    className="text-[16px] leading-7 font-[400] text-textColor hover:text-primaryColor"
-                  >
-                    {item.display}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h2 className="text-[20px] leading-[30px] font-[700] mb-6 text-headingColor">
-              I want to
-            </h2>
-
-            <ul>
-              {quickLinks02.map((item, index) => (
-                <li key={index} className="mb-4">
-                  <Link
-                    to={item.path}
-                    className="text-[16px] leading-7 font-[400] text-textColor hover:text-primaryColor"
-                  >
-                    {item.display}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h2 className="text-[20px] leading-[30px] font-[700] mb-6 text-headingColor">
-              Support
-            </h2>
-
-            <ul>
-              {quickLinks03.map((item, index) => (
-                <li key={index} className="mb-4">
-                  <Link
-                    to={item.path}
-                    className="text-[16px] leading-7 font-[400] text-textColor hover:text-primaryColor"
-                  >
-                    {item.display}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <QuickLinksSection title="Quick Links" links={quickLinks01} />
+          <QuickLinksSection title="I want to" links={quickLinks02} />
+          <QuickLinksSection title="Support" links={quickLinks03} />
         </div>
       </div>
     </footer>

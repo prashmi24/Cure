@@ -17,16 +17,16 @@ import Testimonial from "../components/Testimonial/Testimonial";
 const Home = () => {
   return (
     <>
-      <section className="hero-section pt-[60px] 2xl:h-[800px]">
+      <section className="hero__section pt-[60px] 2xl:h-[800px]">
         <div className="container">
-          <div className="flex flex-col lg:flex-row gap-[90px] items-center justify between">
+          <div className="flex flex-col lg:flex-row gap-[90px] items-center justify-between">
             <div>
               <div className="lg:w-[570px]">
                 <h1 className="text-[36px] leading-[46px] text-headingColor font-[800] md:text-[60px] md:leading-[70px]">
                   Book your next healthcare appointment with
                   <span className="text-primaryColor"> Cure!</span>
                 </h1>
-                <p className="text-para">
+                <p className="text__para">
                   Are you in need of medical assistance? Look no further! With
                   Cure, you can easily schedule appointments with trusted
                   doctors in your area. Our user-friendly platform connects you
@@ -46,8 +46,8 @@ const Home = () => {
                   <h2 className="text-[36px] leading-[56px] lg:text-[44px] lg:leading-[54px] font-[700] text-headingColor">
                     10+
                   </h2>
-                  <span className="w-[100px] h-2 bg-[#fda521] rounded-full block mt-[-14px]"></span>
-                  <p className="text-para">Years of Experience</p>
+                  <span className="w-[100px] h-2 bg-primaryColor rounded-full block mt-[-14px]"></span>
+                  <p className="text__para">Years of Experience</p>
                 </div>
 
                 <div>
@@ -70,12 +70,8 @@ const Home = () => {
 
             <div className="flex gap-[30px] justify-end">
               <div>
-                <img className="w-full" src={heroImg} alt="" />
+                <img className="w-full" src={heroImg} alt="hero-image" />
               </div>
-              {/* <div className="mt-[30px]">
-                <img className="w-full mb-[30px]" src={} alt="" />
-                <img className="w-full" src={heroImg3} alt="" />
-              </div> */}
             </div>
           </div>
         </div>
