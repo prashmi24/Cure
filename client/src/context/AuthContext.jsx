@@ -2,9 +2,7 @@ import { createContext, useContext, useEffect, useReducer } from "react";
 
 // Defined initial state for authentication context
 const initialState = {
-  user: localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user"))
-    : null,
+  user: JSON.parse(localStorage.getItem("user")) || null,
   role: localStorage.getItem("role") || null,
   token: localStorage.getItem("token") || null,
 };
@@ -17,6 +15,7 @@ const authReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN_START":
       return {
+        ...state, // To preserve current state while login is in progress
         user: null,
         role: null,
         token: null,
@@ -28,6 +27,10 @@ const authReducer = (state, action) => {
         role: action.payload.role,
       };
     case "LOGOUT":
+      // Clear localStorage on logout to prevent stale data
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
       return {
         user: null,
         role: null,
@@ -44,10 +47,16 @@ export const AuthContextProvider = ({ children }) => {
 
   // Update local storage whenever authentication state changes
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(state.user));
-    localStorage.setItem("token", state.token);
-    localStorage.setItem("role", state.role);
-  }, [state]);
+    if (state.user) {
+      localStorage.setItem("user", JSON.stringify(state.user));
+    }
+    if (state.token) {
+      localStorage.setItem("token", state.token);
+    }
+    if (state.role) {
+      localStorage.setItem("role", state.role);
+    }
+  }, [state.user, state.token, state.role]);
 
   return (
     <AuthContext.Provider
