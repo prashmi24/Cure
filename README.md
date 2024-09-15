@@ -51,3 +51,21 @@ To run the project locally, follow these steps:
 1. Clone the repository to your local machine:
    ```bash
    git clone https://github.com/prashmi24/Cure.git
+   
+2. Navigate to the project directory and install the required dependencies:
+    ```bash
+    cd Cure
+    npm install
+
+3. Start the backend server:
+    ```bash
+    npm run server
+
+4. Open a new terminal for the frontend and start the React development server:
+    ```bash
+    npm run server
+    
+5. Open http://localhost:3000 in your web browser to view the app.
+    ```bash
+    npm run client
+
