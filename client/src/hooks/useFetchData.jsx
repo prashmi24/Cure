@@ -6,27 +6,28 @@ const useFetchData = (url) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const res = await fetch(url, {
-  //         headers: { Authorization: `Bearer ${token}` },
-  //       });
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch(url, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-  //       const result = await res.json();
-  //       if (!res.ok) {
-  //         throw new Error(result.message);
-  //       }
-  //       setData(result.data);
-  //       setLoading(false);
-  //     } catch (error) {
-  //       setLoading(false);
-  //       setError(error.message);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [url]);
+        const result = await res.json();
+        if (!res.ok) {
+          throw new Error(result.message || "Something went wrong");
+        }
+        setData(result.data || []);
+      } catch (error) {
+        setError(error.message || "An error occured");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [url]);
 
   return {
     data,

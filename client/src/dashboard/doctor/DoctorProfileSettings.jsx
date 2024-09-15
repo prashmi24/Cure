@@ -8,7 +8,7 @@ const DoctorProfileSettings = ({ doctorData }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: "",
+    // password: "",
     phone: "",
     bio: "",
     gender: "",
@@ -22,30 +22,23 @@ const DoctorProfileSettings = ({ doctorData }) => {
     otherSpecialty: "",
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Update form data when doctor data changes
+  // For security reasons, password is not stored in form data
   useEffect(() => {
-    // Update form data when doctor data changes
-    // For security reasons, password is not stored in form data
-    setFormData({
-      name: doctorData?.name,
-      email: doctorData?.email,
-      phone: doctorData?.phone,
-      bio: doctorData?.bio,
-      gender: doctorData?.gender,
-      specialty: doctorData?.specialty,
-      amount: doctorData?.amount,
-      qualifications: doctorData?.qualifications,
-      experiences: doctorData?.experiences,
-      timeSlots: doctorData?.timeSlots,
-      about: doctorData?.about,
-      photo: doctorData?.photo,
-      otherSpecialty: "",
-    });
+    if (doctorData) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        ...doctorData,
+        photo: doctorData?.photo || null,
+        otherSpecialty:
+          doctorData?.specialty === "other" ? doctorData?.otherSpecialty : "",
+      }));
+    }
   }, [doctorData]);
 
   // Handle input change for form fields
-  // const handleInputChange = (e) => {
-  //   setFormData({ ...formData, [e.target.name]: e.target.value });
-  // };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
@@ -58,12 +51,13 @@ const DoctorProfileSettings = ({ doctorData }) => {
   const handleFileInputChange = async (e) => {
     const file = e.target.files[0];
     const data = await uploadImageToCloudinary(file);
-    // setFormData({ ...formData, photo: data?.url });
+    setFormData((prevFormData) => ({ ...formData, photo: data?.url }));
   };
 
   // Handle profile update submission
   const updateProfileHandler = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     try {
       const res = await fetch(`${BASE_URL}/doctor/${doctorData._id}`, {
         method: "PUT",
@@ -81,24 +75,17 @@ const DoctorProfileSettings = ({ doctorData }) => {
       toast.success(message);
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   // Add item to array field in form data
-  // const addItem = (key, item) => {
-  //   setFormData((prevFormData) => ({
-  //     ...prevFormData,
-  //     [key]: [...prevFormData[key], item],
-  //   }));
-  // };
   const addItem = (key, item) => {
-    setFormData((prevFormData) => {
-      const prevItems = prevFormData[key] || []; // Initialize as empty array if undefined
-      return {
-        ...prevFormData,
-        [key]: [...prevItems, item],
-      };
-    });
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [key]: [...(prevFormData[key] || []), item],
+    }));
   };
 
   // Handle input change for reusable form fields (qualifications, experiences, timeSlots)
@@ -106,7 +93,7 @@ const DoctorProfileSettings = ({ doctorData }) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => {
       const updateItems = [...prevFormData[key]];
-      updateItems[index][name] = value;
+      updateItems[index] = { ...updateItems[index], [name]: value };
       return {
         ...prevFormData,
         [key]: updateItems,
@@ -190,7 +177,7 @@ const DoctorProfileSettings = ({ doctorData }) => {
         Profile Information
       </h2>
 
-      <form>
+      <form onSubmit={updateProfileHandler}>
         {/* Name */}
         <div className="mb-5">
           <p className="form-label">
@@ -215,12 +202,9 @@ const DoctorProfileSettings = ({ doctorData }) => {
             type="text"
             name="email"
             value={formData.email}
-            onChange={handleInputChange}
-            placeholder="Email"
             className="form-input"
             readOnly
-            aria-readonly
-            disabled="true"
+            disabled
           />
         </div>
 
@@ -578,7 +562,6 @@ const DoctorProfileSettings = ({ doctorData }) => {
               type="file"
               name="photo"
               id="customFile"
-              value={formData.photo}
               onChange={handleFileInputChange}
               accept=".jpg, .png"
               className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
@@ -596,9 +579,9 @@ const DoctorProfileSettings = ({ doctorData }) => {
           <button
             type="submit"
             className="bg-primaryColor text-white text-[18px] leading-[30px] w-full py-3 px-rounded-lg"
-            onClick={updateProfileHandler}
+            disabled={isSubmitting}
           >
-            Update Profile
+            {isSubmitting ? "Updating..." : "Update Profile"}
           </button>
         </div>
       </form>

@@ -12,24 +12,26 @@ const MyBookings = () => {
     error,
   } = useFetchData(`${BASE_URL}/users/appointments/my-appointments`);
 
-  return (
-    <div>
-      {loading && !error && <Loading />}
-      {error && !loading && <Error errorMessage={error} />}
-      {!loading && !error && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          {appointments.map((doctor) => (
-            <DoctorCard doctor={doctor} key={doctor._id} />
-          ))}
-        </div>
-      )}
+  if (loading) {
+    return <Loading />;
+  }
 
-      {!loading && !error && appointments.length === 0 && (
-        <h2 className="mt-5 text-center text-headingColor leading-7 text-[20px] font-semibold">
-          No data found! Book an appointment
-        </h2>
-      )}
+  if (error) {
+    return <Error errorMessage={error} />;
+  }
+
+  const validAppointments = Array.isArray(appointments) ? appointments : [];
+
+  return validAppointments.length > 0 ? (
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      {validAppointments.map((doctor) => (
+        <DoctorCard doctor={doctor} key={doctor._id} />
+      ))}
     </div>
+  ) : (
+    <h2 className="mt-5 text-center text-headingColor leading-7 text-[20px] font-semibold">
+      No data found! Book an appointment
+    </h2>
   );
 };
 

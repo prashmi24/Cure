@@ -36,15 +36,21 @@ const UserProfileSettings = ({ user }) => {
   const handleFileInputChange = async (event) => {
     const file = event.target.files[0];
 
-    const data = await uploadImageToCloudinary(file);
-
-    setSelectedFile(data.url);
-    setFormData({ ...formData, photo: data.url });
+    try {
+      const data = await uploadImageToCloudinary(file);
+      setSelectedFile(data.url);
+      setFormData({ ...formData, photo: data.url });
+    } catch (error) {
+      toast.error("Image upload failed. Please try again.");
+    }
   };
 
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+    const updatedData = { ...formData };
+    if (!updatedData.password) delete updatedData.password;
 
     try {
       const res = await fetch(`${BASE_URL}/users/${user._id}`, {
@@ -53,7 +59,7 @@ const UserProfileSettings = ({ user }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(updatedData),
       });
 
       const { message } = await res.json();
@@ -90,10 +96,8 @@ const UserProfileSettings = ({ user }) => {
             placeholder="Your email"
             name="email"
             value={formData.email}
-            onChange={handleInputChange}
             className="w-full px-4 py-3 border-b border-solid border-[#0a7273] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
-            aria-readonly
-            readOnly
+            disabled
           />
         </div>
 
@@ -107,6 +111,7 @@ const UserProfileSettings = ({ user }) => {
             className="w-full px-4 py-3 border-b border-solid border-[#0a7273] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
           />
         </div>
+
         <div className="mb-5">
           <input
             type="text"
@@ -151,7 +156,6 @@ const UserProfileSettings = ({ user }) => {
               type="file"
               name="photo"
               id="customFile"
-              value={formData.photo}
               onChange={handleFileInputChange}
               accept=".jpg, .png"
               className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
@@ -160,13 +164,13 @@ const UserProfileSettings = ({ user }) => {
               htmlFor="customFile"
               className="absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#fda521] text-white font-semibold rounded-lg truncate cursor-pointer"
             >
-              {selectedFile ? selectedFile.name : "Upload Photo"}
+              {selectedFile ? "Photo Uploaded" : "Upload Photo"}
             </label>
           </div>
         </div>
         <div className="mt-7">
           <button
-            disabled={loading && true}
+            disabled={loading}
             type="submit"
             className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3"
           >
