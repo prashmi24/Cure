@@ -1,6 +1,4 @@
 import jwt from "jsonwebtoken";
-import Doctor from "../models/doctorSchema.js";
-import User from "../models/userSchema.js";
 
 export const authenticate = async (req, res, next) => {
   // getting token from headers
@@ -25,29 +23,16 @@ export const authenticate = async (req, res, next) => {
     if (error.name === "TokenExpiredError") {
       return res.status(401).json({ message: "Token is expired" });
     }
-
     return res.status(401).json({ success: false, message: "Invalid token" });
   }
 };
 
-export const restrict = (roles) => async (req, res, next) => {
-  const userId = req.userId;
-
-  let user;
-  const patient = await User.findById(userId);
-  const doctor = await Doctor.findById(userId);
-
-  if (patient) {
-    user = patient;
-  }
-  if (doctor) {
-    user = doctor;
-  }
-
-  if (!roles.includes(user.role)) {
+export const restrict = (roles) => (req, res, next) => {
+  if (!roles.includes(req.role)) {
     return res
-      .status(401)
+      .status(403) // Use 403 for "Forbidden" access when roles don't match
       .json({ success: false, message: "Unauthorized access" });
   }
+
   next();
 };
