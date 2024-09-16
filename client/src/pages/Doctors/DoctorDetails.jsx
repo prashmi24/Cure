@@ -13,23 +13,27 @@ import { useParams } from "react-router-dom";
 const DoctorDetails = () => {
   const [tab, setTab] = useState("about");
   const { id } = useParams();
-  const { data: doctor, loading, error } = useFetchData(`${BASE_URL}/doctor`);
+  const {
+    data: doctor,
+    loading,
+    error,
+  } = useFetchData(`${BASE_URL}/doctor/${id}`);
 
   const {
-    name,
-    phone,
-    bio,
-    gender,
-    specialty,
-    amount,
-    qualifications,
-    experiences,
-    timeSlots,
-    about,
-    photo,
-    avgRating,
-    totalRating,
-  } = doctor;
+    name = "",
+    phone = "",
+    bio = "",
+    gender = "",
+    specialty = "",
+    amount = "",
+    qualifications = [],
+    experiences = [],
+    timeSlots = [],
+    about = "",
+    photo = "",
+    avgRating = "N/A",
+    totalRating = 0,
+  } = doctor || {};
 
   return (
     <section>
@@ -38,10 +42,13 @@ const DoctorDetails = () => {
         {error && <Error />}
         {!loading && !error && (
           <div className="grid gap-[50px]">
-            <div className="md:col-span-2"></div>
             <div className="flex flex-col items-center gap-5">
               <figure className="max-w-[200px] max-h-[200px]">
-                <img src={photo} alt="doctor-img" className="w-full" />
+                <img
+                  src={photo}
+                  alt={`Photo of Dr. ${name}`}
+                  className="w-full"
+                />
               </figure>
               <div>
                 <span className="bg-[#ccf0f3] text-irisBlueColor py-1 px-6 lg:py-2 lg:px-6 text-[12px] leading-4 lg:text-[16px] lg:leading-7 font-semibold rounded">
@@ -96,7 +103,10 @@ const DoctorDetails = () => {
                   />
                 )}
                 {tab === "feedback" && (
-                  <Feedback reviews={reviews} totalRating={totalRating} />
+                  <Feedback
+                    reviews={doctor.reviews || []}
+                    totalRating={totalRating}
+                  />
                 )}
               </div>
             </div>
