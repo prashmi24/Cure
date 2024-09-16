@@ -1,4 +1,6 @@
 import React from "react";
+import { Routes, Route } from "react-router-dom";
+
 import Home from "../pages/Home.jsx";
 import Login from "../pages/Login.jsx";
 import Contact from "../pages/Contact.jsx";
@@ -6,9 +8,10 @@ import Services from "../pages/Services.jsx";
 import Signup from "../pages/Signup.jsx";
 import Doctors from "../pages/Doctors/Doctors.jsx";
 import DoctorDetails from "../pages/Doctors/DoctorDetails.jsx";
+
 import MyAccount from "../dashboard/user/MyAccount.jsx";
 import DocAccount from "../dashboard/doctor/DocAccount.jsx";
-import { Routes, Route } from "react-router-dom";
+
 import ProtectedRoute from "./ProtectedRoutes.jsx";
 
 const Routers = () => {
@@ -22,6 +25,7 @@ const Routers = () => {
       <Route path="/register" element={<Signup />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/services" element={<Services />} />
+
       <Route
         path="/users/profile/me"
         element={
