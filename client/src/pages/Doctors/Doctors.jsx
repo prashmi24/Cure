@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import DoctorCard from "./DoctorCard";
-import { doctors } from "./../../assets/data/doctors";
 import { BASE_URL } from "../../config";
 import useFetchData from "../../hooks/useFetchData";
 import Loader from "../../components/Loader/Loading.jsx";
@@ -9,14 +8,10 @@ import Error from "../../components/Error/Error.jsx";
 const Doctors = () => {
   const [query, setQuery] = useState("");
   const [debounceQuery, setDebounceQuery] = useState("");
-  const handleSearch = () => {
-    setQuery(query.trim());
-    console.log("handle search");
-  };
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setDebounceQuery(query);
+      setDebounceQuery(query.trim());
     }, 700);
     return () => clearTimeout(timeout);
   }, [query]);
@@ -25,7 +20,7 @@ const Doctors = () => {
     data: doctors,
     loading,
     error,
-  } = useFetchData(`${BASE_URL}/doctor?query=${query}`);
+  } = useFetchData(`${BASE_URL}/doctor?query=${debounceQuery}`);
 
   return (
     <>
@@ -42,7 +37,7 @@ const Doctors = () => {
             />
             <button
               className="btn mt-0 rounded-[0px] rounded-r-md"
-              onClick={handleSearch}
+              onClick={() => setDebounceQuery(query.trim())}
             >
               Search
             </button>
@@ -54,9 +49,9 @@ const Doctors = () => {
         <div className="container">
           {loading && <Loader />}
           {error && <Error />}
-          {!loading && !error && (
+          {!loading && !error && doctors && (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 lg:gap-[30px] mt-[30px] lg:mt-[55px]">
-              {doctors.map((doctor) => (
+              {doctors?.map((doctor) => (
                 <DoctorCard key={doctor.id} doctor={doctor} />
               ))}
             </div>
