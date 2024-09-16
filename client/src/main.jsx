@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           position="top-right"
           autoClose={3000}
           closeOnClick
-          pauseOnHover={false}
+          pauseOnHover
         />
         <App />
       </AuthContextProvider>
