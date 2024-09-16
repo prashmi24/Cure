@@ -4,15 +4,23 @@ import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 
 const DoctorCard = ({ doctor }) => {
-  const { name, avgRating, totalRating, photo, specialty } = doctor;
+  const {
+    name,
+    avgRating = "N/A",
+    totalRating = 0,
+    photo,
+    specialty,
+    experiences,
+  } = doctor;
 
   return (
     <div className="p-3 lg:p-5">
       <div>
         <img
           src={photo}
-          alt="doctor-photo"
+          alt={`Photo of Dr. ${name}`}
           className="w-full h-[300px] object-cover"
+          loading="lazy"
         />
       </div>
 
@@ -39,19 +47,18 @@ const DoctorCard = ({ doctor }) => {
 
       <div className="mt-[18px] lg:mt-5 flex items-center justify-between">
         <div>
-          {/* <h3 className="text-[16px] leading-7 lg:text-[18px] leading-[30px] font-semibold text-headingColor">
-            {totalPatients}+ patients
-          </h3> */}
-          <p className="text-[14px] leading-6 font-[400] text-textColor">
-            At {experiences && experiences[0]?.hospital}
-          </p>
+          {experiences?.length > 0 && (
+            <p className="text-[14px] leading-6 font-[400] text-textColor">
+              At {experiences[0]?.hospital}
+            </p>
+          )}
         </div>
 
         <Link
           to={`/doctor/${doctor._id}`}
           className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E]  flex items-center justify-center group hover:bg-primaryColor hover:border-none"
         >
-          <BsArrowRight className="group-hover:text-white w-6 h-5"></BsArrowRight>
+          <BsArrowRight className="group-hover:text-white w-6 h-5" />
         </Link>
       </div>
     </div>
