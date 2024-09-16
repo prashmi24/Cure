@@ -18,7 +18,7 @@ const Signup = () => {
     password: "",
     role: "patient",
     gender: "",
-    photo: selectedFile,
+    photo: "",
   });
 
   const handleInputChange = (e) => {
@@ -27,12 +27,19 @@ const Signup = () => {
 
   const handleFileInputChange = async (event) => {
     const file = event.target.files[0];
-
-    const data = await uploadImageToCloudinary(file);
-
-    setPreviewURL(data.url);
-    setSelectedFile(data.url);
-    // setFormData({ ...formData, photo: data.url });
+    if (file) {
+      try {
+        const data = await uploadImageToCloudinary(file);
+        setPreviewURL(data.url);
+        setFormData({
+          ...formData,
+          photo: data.url,
+        });
+        toast.success("Image uploaded successfully");
+      } catch (error) {
+        toast.error("Image upload failed");
+      }
+    }
   };
 
   const submitHandler = async (event) => {
@@ -149,7 +156,7 @@ const Signup = () => {
               </div>
 
               <div className="mb-5 flex items-center gap-3">
-                {selectedFile && (
+                {previewURL && (
                   <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
                     <img
                       src={previewURL}
@@ -164,7 +171,6 @@ const Signup = () => {
                     type="file"
                     name="photo"
                     id="customFile"
-                    value={formData.photo}
                     onChange={handleFileInputChange}
                     accept=".jpg, .png"
                     className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
@@ -180,7 +186,7 @@ const Signup = () => {
 
               <div className="mt-7">
                 <button
-                  disabled={loading && true}
+                  disabled={loading}
                   type="submit"
                   className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3"
                 >
