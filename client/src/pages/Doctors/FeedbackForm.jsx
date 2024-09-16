@@ -42,7 +42,7 @@ const FeedbackForm = () => {
   };
 
   return (
-    <form action="">
+    <form onSubmit={handleSubmitReview}>
       <div>
         <h3 className="text-headingColor text-[16px] leading-6 font-semibold mb-4 mt-0">
           How would you rate the overall experience?
@@ -55,7 +55,7 @@ const FeedbackForm = () => {
                 key={index}
                 type="button"
                 className={`${
-                  index <= ((rating && hover) || hover)
+                  index <= (hover || rating)
                     ? "text-yellowColor"
                     : "text-gray-400"
                 } bg-transparent border-none outline-none text-[22px] cursor-pointer`}
@@ -84,11 +84,12 @@ const FeedbackForm = () => {
           className="border border-solid border-[#0066ff34] focus:outline outline-primaryColor w-full px-4 py-3 rounded-md"
           rows="4"
           placeholder="Write your message"
-          onChange={() => setReviewText(e.target.value)}
+          onChange={(e) => setReviewText(e.target.value)}
+          value={reviewText}
         ></textarea>
       </div>
 
-      <button type="submit" className="btn" onClick={handleSubmitReview}>
+      <button type="submit" className="btn" disabled={loading}>
         {loading ? <FadeLoader size={10} color="#ffffff" /> : `Submit Feedback`}
       </button>
     </form>
