@@ -15,13 +15,24 @@ const Login = () => {
   const navigate = useNavigate();
   const { dispatch } = useContext(AuthContext);
 
+  const { email, password } = formData;
+
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+    if (!email || !password) {
+      toast.error("Please fill in all fields");
+      setLoading(false);
+      return;
+    }
 
     try {
       const res = await fetch(`${BASE_URL}/auth/login`, {
@@ -29,12 +40,12 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ email, password }),
       });
 
       const result = await res.json();
       if (!res.ok) {
-        throw new Error(result.message);
+        throw new Error(result.message || "Failed to login");
       }
 
       dispatch({
@@ -45,13 +56,12 @@ const Login = () => {
           role: result.role,
         },
       });
-      console.log(result, "login_data");
 
-      setLoading(false);
-      toast.success(result.message);
+      toast.success(result.message || "Login successful");
       navigate("/home");
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.message || "Something went wrong");
+    } finally {
       setLoading(false);
     }
   };
@@ -69,7 +79,7 @@ const Login = () => {
               type="email"
               placeholder="Enter Your Email"
               name="email"
-              value={formData.email}
+              value={email}
               onChange={handleInputChange}
               className="w-full px-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
               required
@@ -81,7 +91,7 @@ const Login = () => {
               type="password"
               placeholder="Enter Your Password"
               name="password"
-              value={formData.password}
+              value={password}
               onChange={handleInputChange}
               className="w-full px-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
               required
@@ -92,6 +102,7 @@ const Login = () => {
             <button
               type="submit"
               className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3"
+              disabled={loading}
             >
               {loading ? <FadeLoader size={20} color="#ffffff" /> : " Login"}
             </button>
