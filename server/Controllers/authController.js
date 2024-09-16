@@ -13,19 +13,23 @@ const generateToken = (user) => {
   );
 };
 
+const findUserByEmail = async (email, role) => {
+  if (role === "patient") {
+    return await User.findOne({ email });
+  } else if (role === "doctor") {
+    return await Doctor.findOne({ email });
+  }
+  return null;
+};
+
 export const register = async (req, res) => {
   const { email, password, name, role, photo, gender } = req.body;
   try {
-    let user = null;
-    if (role === "patient") {
-      user = await User.findOne({ email });
-    } else if (role === "doctor") {
-      user = await Doctor.findOne({ email });
-    }
+    let user = await findUserByEmail(email, role);
 
     // if user already exists
     if (user) {
-      return res.status(400).json({ message: "User already exists" });
+      return res.status(409).json({ message: "User already exists" });
     }
 
     // hashing password
@@ -42,9 +46,7 @@ export const register = async (req, res) => {
         gender,
         role,
       });
-    }
-
-    if (role === "doctor") {
+    } else if (role === "doctor") {
       user = new Doctor({
         name,
         email,
@@ -57,28 +59,26 @@ export const register = async (req, res) => {
 
     await user.save();
     res
-      .status(200)
+      .status(201)
       .json({ success: true, message: "User created successfully" });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
-      .json({ success: false, message: "Internal server error, Try Again" });
+      .json({
+        success: false,
+        message: "Internal server error, please try again later",
+      });
   }
 };
+
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    let user = null;
-    const patient = await User.findOne({ email });
-    const doctor = await Doctor.findOne({ email });
-    if (patient) {
-      user = patient;
-    }
-    if (doctor) {
-      user = doctor;
-    }
-
+    let user =
+      (await findUserByEmail(email, "patient")) ||
+      (await findUserByEmail(email, "doctor"));
     // to check if user exists or not
 
     if (!user) {
@@ -87,21 +87,18 @@ export const login = async (req, res) => {
 
     // password matching
 
-    const isPasswordMatch = await bcrypt.compare(
-      req.body.password,
-      user.password
-    );
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
 
     if (!isPasswordMatch) {
       return res
-        .status(400)
+        .status(401)
         .json({ status: false, message: "Invalid credentials" });
     }
 
     // get token
 
     const token = generateToken(user);
-    const { password, role, appointments, ...rest } = user._doc;
+    const { password: _, role, appointments, ...rest } = user._doc;
     res.status(200).json({
       status: true,
       message: "Login Successful",
@@ -110,6 +107,7 @@ export const login = async (req, res) => {
       role,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ status: false, message: "Failed to Login" });
   }
 };
