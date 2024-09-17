@@ -6,16 +6,22 @@ const bookingSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "Doctor",
       required: true,
+      index: true,
     },
     user: {
       type: mongoose.Types.ObjectId,
       ref: "User",
       required: true,
+      index: true,
     },
-    ticketPrice: { type: String, required: true },
+    ticketPrice: {
+      type: Number,
+      required: true,
+    },
     appointmentDate: {
       type: Date,
       required: true,
+      index: true,
     },
     status: {
       type: String,
@@ -29,5 +35,7 @@ const bookingSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+bookingSchema.index({ user: 1, doctor: 1, appointmentDate: 1 });
 
 export default mongoose.model("Booking", bookingSchema);
