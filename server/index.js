@@ -42,7 +42,6 @@ app.get("/", (req, res) => {
 });
 
 // Route Middleware
-// app.use(cors(corsOptions));
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/doctor", doctorRoute);
@@ -51,7 +50,11 @@ app.use("/api/v1/reviews", reviewRoute);
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send("Something went wrong!");
+  res.status(500).json({
+    success: false,
+    message: "Something went wrong!",
+    error: err.message,
+  });
 });
 
 // Start the server
