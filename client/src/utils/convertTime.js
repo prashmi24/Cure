@@ -16,10 +16,9 @@ const convertTime = (time) => {
   }
 
   return (
-    hours.toString.padStart(2, "0") +
+    hours.toString().padStart(2, "0") +
     ":" +
     minutes.toString().padStart(2, "0") +
-    "" +
     meridian
   );
 };

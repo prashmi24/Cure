@@ -53,9 +53,9 @@ const Home = () => {
 
                   <div>
                     <h2 className="text-[36px] leading-[56px] lg:text-[44px] lg:leading-[54px] font-[700] text-headingColor">
-                      150+
+                      15,000+
                     </h2>
-                    <span className="w-[100px] h-2 bg-purpleColor rounded-full block mt-[-14px]"></span>
+                    <span className="w-[100px] h-2 bg-greenColor rounded-full block mt-[-14px]"></span>
                     <p className="text-para">Expert Doctors</p>
                   </div>
 
@@ -63,7 +63,7 @@ const Home = () => {
                     <h2 className="text-[36px] leading-[56px] lg:text-[44px] lg:leading-[54px] font-[700] text-headingColor">
                       100%
                     </h2>
-                    <span className="w-[100px] h-2 bg-[#0a7273] rounded-full block mt-[-14px]"></span>
+                    <span className="w-[100px] h-2 bg-secondaryColor rounded-full block mt-[-14px]"></span>
                     <p className="text-para">Patient Satisfaction</p>
                   </div>
                 </div>
@@ -74,7 +74,7 @@ const Home = () => {
                   <img
                     className="w-full"
                     src={heroImg}
-                    alt="hero-image"
+                    alt="Doctors and Patients"
                     loading="lazy"
                   />
                 </div>
@@ -85,10 +85,10 @@ const Home = () => {
 
         {/* how it works */}
 
-        <section>
+        <section aria-labelledby="how-it-works">
           <div className="container">
             <div className="lg:w-[470px] mx-auto">
-              <h2 className="heading text-center">
+              <h2 id="how-it-works" className="heading text-center">
                 We prioritize your health & convenience
               </h2>
               <p className="text-para text-center">
@@ -121,9 +121,9 @@ const Home = () => {
 
                   <Link
                     to="/doctor"
-                    className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none"
+                    className="w-[44px] h-[44px] rounded-full border border-solid border-primaryColor mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none"
                   >
-                    <BsArrowRight className="group-hover:text-white w-6 h-5"></BsArrowRight>
+                    <BsArrowRight className="group-hover:text-white text-primaryColor w-6 h-5"></BsArrowRight>
                   </Link>
                 </div>
               </div>
@@ -150,9 +150,9 @@ const Home = () => {
 
                   <Link
                     to="/doctor"
-                    className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none"
+                    className="w-[44px] h-[44px] rounded-full border border-solid border-primaryColor mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none"
                   >
-                    <BsArrowRight className="group-hover:text-white w-6 h-5"></BsArrowRight>
+                    <BsArrowRight className="group-hover:text-white text-primaryColor w-6 h-5"></BsArrowRight>
                   </Link>
                 </div>
               </div>
@@ -180,9 +180,9 @@ const Home = () => {
 
                   <Link
                     to="/doctor"
-                    className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none"
+                    className="w-[44px] h-[44px] rounded-full border border-solid border-primaryColor mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none"
                   >
-                    <BsArrowRight className="group-hover:text-white w-6 h-5"></BsArrowRight>
+                    <BsArrowRight className="group-hover:text-white text-primaryColor w-6 h-5"></BsArrowRight>
                   </Link>
                 </div>
               </div>
@@ -191,13 +191,13 @@ const Home = () => {
         </section>
 
         {/* about */}
-        <About></About>
+        <About />
 
         {/* services */}
-        <section>
+        <section aria-labelledby="services">
           <div className="container">
             <div className="xl:w-[470px] mx-auto">
-              <h2 className="heading text-center">
+              <h2 id="services" className="heading text-center">
                 Explore Our Healthcare Offerings
               </h2>
               <p className="text-para text-center">
@@ -278,7 +278,6 @@ const Home = () => {
               <div className="w-1/2 hidden md:block mt-[100px]">
                 <img src={faq} alt="faq-img" />
               </div>
-
               <div className="w-full md:w-1/2 ml-[20px]">
                 <h2 className="heading">Frequently Asked Questions</h2>
                 <FaqList />

@@ -7,20 +7,26 @@ import FeedbackForm from "./FeedbackForm";
 const Feedback = ({ reviews = [], totalRating = 0 }) => {
   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
 
+  const renderStars = (rating) => {
+    return [...Array(rating)].map((_, index) => (
+      <AiFillStar key={index} color="#FEB60D" aria-label={`${rating} stars`} />
+    ));
+  };
+
   return (
     <div>
       <div className="mb-[50px]">
         <h4 className="text-[20px] leading-[30px] font-bold text-headingColor mb-[30px]">
-          All reviews({totalRating || 0})
+          All reviews ({totalRating || 0})
         </h4>
 
         {reviews.length > 0 ? (
-          reviews?.map((review, index) => (
+          reviews.map((review, index) => (
             <div key={index} className="flex justify-between gap-10 mb-[30px]">
               <div className="flex gap-3">
                 <figure className="w-10 h-10 rounded-full">
                   <img
-                    src={reviews?.user?.photo || avatar}
+                    src={review?.user?.photo || avatar}
                     alt="avatar"
                     className="w-full rounded-full"
                   />
@@ -29,7 +35,7 @@ const Feedback = ({ reviews = [], totalRating = 0 }) => {
                   <h5 className="text-[16px] leading-6 text-primaryColor font-bold">
                     {review?.user?.name || "Anonymous"}
                   </h5>
-                  <p className="text-[14px] leding-6 text-textColor">
+                  <p className="text-[14px] leading-6 text-textColor">
                     {dateFormat(review?.createdAt)}
                   </p>
                   <p className="text-para mt-3 font-medium text-[15px]">
@@ -37,10 +43,11 @@ const Feedback = ({ reviews = [], totalRating = 0 }) => {
                   </p>
                 </div>
               </div>
-              <div className="flex gap-1">
-                {[...Array(review?.rating).keys()].map((_, index) => (
-                  <AiFillStar key={index} color="#FEB60D" />
-                ))}
+              <div
+                className="flex gap-1"
+                aria-label={`Rating: ${review?.rating} stars`}
+              >
+                {renderStars(review?.rating)}
               </div>
             </div>
           ))
@@ -53,7 +60,11 @@ const Feedback = ({ reviews = [], totalRating = 0 }) => {
 
       {!showFeedbackForm && (
         <div className="text-center">
-          <button className="btn" onClick={() => setShowFeedbackForm(true)}>
+          <button
+            className="btn"
+            onClick={() => setShowFeedbackForm(true)}
+            aria-label="Open feedback form"
+          >
             Give Feedback
           </button>
         </div>

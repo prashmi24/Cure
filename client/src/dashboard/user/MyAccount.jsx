@@ -7,6 +7,7 @@ import { BASE_URL } from "../../config.js";
 import Loading from "../../components/Loader/Loading.jsx";
 import Error from "../../components/Error/Error.jsx";
 import { useNavigate } from "react-router-dom";
+import { FaUser } from "react-icons/fa6";
 
 const MyAccount = () => {
   const { dispatch } = useContext(AuthContext);
@@ -40,7 +41,7 @@ const MyAccount = () => {
             <div className="flex items-center justify-center">
               <figure className="w-[100px] h-[100px] rounded-full border-2 border-solid border-primaryColor">
                 <img
-                  src={userData?.photo}
+                  src={userData?.photo || <FaUser />}
                   alt="user-img"
                   className="w-full h-full rounded-full"
                 />
@@ -57,7 +58,7 @@ const MyAccount = () => {
               <p className="text-textColor text-[15px] leading-6 font-medium">
                 Blood Group:
                 <span className="ml-2 text-headingColor text-[16px] leading-8">
-                  {userData?.bloodGroup}
+                  {userData?.bloodGroup || "N/A"}
                 </span>
               </p>
             </div>
@@ -83,7 +84,7 @@ const MyAccount = () => {
                   tab === "bookings"
                     ? "bg-primaryColor text-white"
                     : "text-headingColor border-primaryColor"
-                } `}
+                }hover:bg-primaryHoverColor hover:text-white `}
               >
                 My Bookings
               </button>
@@ -93,7 +94,7 @@ const MyAccount = () => {
                   tab === "settings"
                     ? "bg-primaryColor text-white"
                     : "text-headingColor border-primaryColor"
-                } `}
+                } hover:bg-primaryHoverColor hover:text-white`}
               >
                 Profile Settings
               </button>

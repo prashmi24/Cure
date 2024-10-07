@@ -5,12 +5,12 @@ import { BsArrowRight } from "react-icons/bs";
 
 const DoctorCard = ({ doctor }) => {
   const {
-    name,
+    name = "Doctor Name",
     avgRating = "N/A",
     totalRating = 0,
-    photo,
-    specialty,
-    experiences,
+    photo = "/default-image.jpg", //add image
+    specialty = "Specialty",
+    experiences = [],
   } = doctor;
 
   return (
@@ -21,6 +21,9 @@ const DoctorCard = ({ doctor }) => {
           alt={`Photo of Dr. ${name}`}
           className="w-full h-[300px] object-cover"
           loading="lazy"
+          onError={(e) => {
+            e.target.src = "/default-image.jpg";
+          }} // Fallback image
         />
       </div>
 
@@ -47,9 +50,13 @@ const DoctorCard = ({ doctor }) => {
 
       <div className="mt-[18px] lg:mt-5 flex items-center justify-between">
         <div>
-          {experiences?.length > 0 && (
+          {experiences.length > 0 ? (
             <p className="text-[14px] leading-6 font-[400] text-textColor">
-              At {experiences[0]?.hospital}
+              At {experiences[0]?.hospital || "Unknown Hospital"}
+            </p>
+          ) : (
+            <p className="text-[14px] leading-6 font-[400] text-textColor">
+              No experience available
             </p>
           )}
         </div>
@@ -58,7 +65,7 @@ const DoctorCard = ({ doctor }) => {
           to={`/doctor/${doctor._id}`}
           className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E]  flex items-center justify-center group hover:bg-primaryColor hover:border-none"
         >
-          <BsArrowRight className="group-hover:text-white w-6 h-5" />
+          <BsArrowRight className="group-hover:text-white w-6 h-5 transition-colors duration-300" />
         </Link>
       </div>
     </div>

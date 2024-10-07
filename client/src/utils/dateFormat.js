@@ -1,5 +1,11 @@
-export const dateFormat = (date, config) => {
+export const dateFormat = (date, config, locale = "en-US") => {
   const defaultOptions = { day: "numeric", month: "short", year: "numeric" };
   const options = config || defaultOptions;
-  return new Date(date).toLocaleDateString("en-Us", options);
+
+  const parsedDate = new Date(date);
+  if (isNaN(parsedDate.getTime())) {
+    return "Invalid Date";
+  }
+
+  return parsedDate.toLocaleDateString(locale, options);
 };

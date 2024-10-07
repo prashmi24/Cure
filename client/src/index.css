@@ -30,7 +30,7 @@
   }
 
   .form-input {
-    @apply w-full px-4 py-3 border border-solid border-[#FDA521] focus:outline-none focus:border-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer rounded-md;
+    @apply w-full px-4 py-3 border border-solid border-primaryColor focus:outline-none focus:border-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer rounded-md;
   }
 }
 
@@ -69,4 +69,13 @@
 
 .accordion-open {
   animation: slideDown 0.3s ease-in-out;
+}
+
+.glassEffect {
+  background: rgba(151, 105, 209, 0.2);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 20px;
 }

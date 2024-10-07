@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import signup from "../assets/images/signup.png";
+import favicon from "../assets/images/favicon.png";
 import uploadImageToCloudinary from "../utils/uploadCloudinary.js";
 import { BASE_URL } from "../config.js";
 import { toast } from "react-toastify";
@@ -76,7 +76,7 @@ const Signup = () => {
           <div className="hidden lg:block rounded-l lg ">
             <figure className="rounded-l-lg">
               <img
-                src={signup}
+                src={favicon}
                 alt="signup"
                 className="rounded-l-lg w-full h-[600px] object-cover"
               />
@@ -97,7 +97,7 @@ const Signup = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-b border-solid border-[#0a7273] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
+                  className="w-full px-4 py-3 border-b border-solid border-secondaryColor focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
                   required
                 />
               </div>
@@ -109,7 +109,7 @@ const Signup = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-b border-solid border-[#0a7273] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
+                  className="w-full px-4 py-3 border-b border-solid border-secondaryColor  focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
                   required
                 />
               </div>
@@ -121,7 +121,7 @@ const Signup = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-b border-solid border-[#0a7273] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
+                  className="w-full px-4 py-3 border-b border-solid border-secondaryColor focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
                   required
                 />
               </div>
@@ -177,7 +177,7 @@ const Signup = () => {
                   />
                   <label
                     htmlFor="customFile"
-                    className="absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#fda521] text-white font-semibold rounded-lg truncate cursor-pointer"
+                    className="absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-primaryColor text-white font-semibold rounded-lg truncate cursor-pointer"
                   >
                     Upload Photo
                   </label>

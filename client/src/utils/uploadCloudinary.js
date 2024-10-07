@@ -1,7 +1,11 @@
-const upload_preset = import.meta.env.VITE_UPLOAD_PRESET;
-const cloud_name = import.meta.env.VITE_CLOUD_NAME;
+const upload_preset = import.meta.env.VITE_UPLOAD_PRESET || "default_preset";
+const cloud_name = import.meta.env.VITE_CLOUD_NAME || "default_cloud";
 
 const uploadImageToCloudinary = async (file) => {
+  if (!file || !(file instanceof Blob)) {
+    throw new Error("Invalid file input for Cloudinary upload");
+  }
+
   try {
     const uploadData = new FormData();
     uploadData.append("file", file);
@@ -16,7 +20,12 @@ const uploadImageToCloudinary = async (file) => {
     );
 
     if (!res.ok) {
-      throw new Error("Failed to upload image to Cloudinary");
+      const errorData = await res.json();
+      throw new Error(
+        `Failed to upload image to Cloudinary: ${
+          errorData.error?.message || res.statusText
+        }`
+      );
     }
 
     const data = await res.json();

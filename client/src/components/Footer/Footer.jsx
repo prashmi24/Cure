@@ -7,16 +7,19 @@ import { AiFillYoutube, AiOutlineInstagram } from "react-icons/ai";
 // Define social media links
 const socialLinks = [
   {
-    path: "",
+    path: "https://www.youtube.com",
     icon: <AiFillYoutube className="group-hover:text-white w-4 h-5" />,
+    label: "YouTube",
   },
   {
-    path: "",
+    path: "https://www.instagram.com",
     icon: <AiOutlineInstagram className="group-hover:text-white w-4 h-5" />,
+    label: "Instagram",
   },
   {
-    path: "",
+    path: "https://twitter.com",
     icon: <RiTwitterFill className="group-hover:text-white w-4 h-5" />,
+    label: "Twitter",
   },
 ];
 
@@ -49,11 +52,11 @@ const quickLinks02 = [
     display: "Book an Appointment",
   },
   {
-    path: "/",
+    path: "/locations",
     display: "Find a Location",
   },
   {
-    path: "/",
+    path: "/reviews",
     display: "Write a Review",
   },
 ];
@@ -64,15 +67,15 @@ const quickLinks03 = [
     display: "Contact Us",
   },
   {
-    path: "/",
+    path: "/privacy",
     display: "Privacy Policy",
   },
   {
-    path: "/",
+    path: "/terms",
     display: "Terms of Service",
   },
   {
-    path: "/",
+    path: "/careers",
     display: "Careers",
   },
 ];
@@ -88,6 +91,7 @@ const QuickLinksSection = ({ title, links }) => (
           <Link
             to={item.path}
             className="text-[16px] leading-7 font-[400] text-textColor hover:text-primaryColor"
+            aria-label={item.display}
           >
             {item.display}
           </Link>
@@ -109,7 +113,7 @@ const Footer = () => {
             <img
               src={icon}
               alt="Cure logo"
-              className="object-fit w-auto h-[150px] rounded-full max-w-full"
+              className="object-fit w-auto h-[150px] rounded-full max-w-full lazyload"
             />
             <p className="text-sm leading-7 font-[400] text-textColor mt-4">
               Copyright &#169; {year} Cure
@@ -126,6 +130,7 @@ const Footer = () => {
                   className="w-9 h-9 border border-solid border-[#181a1e] rounded-full flex items-center justify-center group hover:bg-primaryColor hover:border-none"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={link.label}
                 >
                   {link.icon}
                 </a>

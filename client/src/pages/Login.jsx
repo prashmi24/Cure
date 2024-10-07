@@ -45,6 +45,9 @@ const Login = () => {
 
       const result = await res.json();
       if (!res.ok) {
+        if (res.status === 401) {
+          throw new Error("Invalid email or password");
+        }
         throw new Error(result.message || "Failed to login");
       }
 
@@ -81,8 +84,9 @@ const Login = () => {
               name="email"
               value={email}
               onChange={handleInputChange}
-              className="w-full px-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
+              className="w-full px-4 py-3 border-b border-solid border-secondaryColor focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
               required
+              aria-label="Email"
             />
           </div>
 
@@ -93,8 +97,9 @@ const Login = () => {
               name="password"
               value={password}
               onChange={handleInputChange}
-              className="w-full px-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
+              className="w-full px-4 py-3 border-b border-solid border-secondaryColor focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
               required
+              aria-label="Password"
             />
           </div>
 
@@ -103,6 +108,7 @@ const Login = () => {
               type="submit"
               className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3"
               disabled={loading}
+              aria-live="polite"
             >
               {loading ? <FadeLoader size={20} color="#ffffff" /> : " Login"}
             </button>

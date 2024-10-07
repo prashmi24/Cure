@@ -8,13 +8,13 @@ const DoctorAbout = ({ name, about, qualifications, experiences }) => {
         <h3 className="text-[20px] leading-[30px] text-headingColor font-semibold flex items-center gap-2">
           About
           <span className="text-irisBlueColor font-bold text-[24px] leading-9">
-            {name}
+            {name || "Doctor"}
           </span>
         </h3>
-        <p className="text-para">{about}</p>
+        <p className="text-para">{about || "Information not available."}</p>
       </div>
 
-      {qualifications?.length > 0 && (
+      {qualifications?.length > 0 ? (
         <div className="mt-12">
           <h3 className="text-[20px] leading-[30px] text-headingColor font-semibold">
             Education
@@ -31,19 +31,26 @@ const DoctorAbout = ({ name, about, qualifications, experiences }) => {
                     {dateFormat(item.endingDate) || "Present"}
                   </span>
                   <p className="text-[16px] leading-6 font-medium text-textColor">
-                    {item.degree}
+                    {item.degree || "N/A"}
                   </p>
                 </div>
                 <p className="text-[14px] leading-5 font-medium text-textColor">
-                  {item.university}
+                  {item.university || "N/A"}
                 </p>
               </li>
             ))}
           </ul>
         </div>
+      ) : (
+        <div className="mt-12">
+          <h3 className="text-[20px] leading-[30px] text-headingColor font-semibold">
+            Education
+          </h3>
+          <p className="text-para">No education details available.</p>
+        </div>
       )}
 
-      {experiences?.length > 0 && (
+      {experiences?.length > 0 ? (
         <div className="mt-12">
           <h3 className="text-[20px] leading-[30px] text-headingColor font-semibold">
             Experience
@@ -53,18 +60,25 @@ const DoctorAbout = ({ name, about, qualifications, experiences }) => {
             {experiences.map((item, index) => (
               <li key={index} className="p-4 rounded bg-[#fff9ea]">
                 <span className="text-yellowColor text-[15px] leading-6 font-semibold">
-                  {dateFormat(item.startingDate) || "N/A"} - {""}{" "}
+                  {dateFormat(item.startingDate) || "N/A"} -{" "}
                   {dateFormat(item.endingDate) || "Present"}
                 </span>
                 <p className="text-[16px] leading-6 font-medium text-textColor">
-                  {item.position}
+                  {item.position || "N/A"}
                 </p>
                 <p className="text-[14px] leading-5 font-medium text-textColor">
-                  {item.hospital}
+                  {item.hospital || "N/A"}
                 </p>
               </li>
             ))}
           </ul>
+        </div>
+      ) : (
+        <div className="mt-12">
+          <h3 className="text-[20px] leading-[30px] text-headingColor font-semibold">
+            Experience
+          </h3>
+          <p className="text-para">No experience details available.</p>
         </div>
       )}
     </div>

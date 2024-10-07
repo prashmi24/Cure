@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import DoctorCard from "./DoctorCard";
 import { BASE_URL } from "../../config";
 import useFetchData from "../../hooks/useFetchData";
@@ -9,6 +9,7 @@ const Doctors = () => {
   const [query, setQuery] = useState("");
   const [debounceQuery, setDebounceQuery] = useState("");
 
+  // Debounce the search query to avoid excessive API calls
   useEffect(() => {
     const timeout = setTimeout(() => {
       setDebounceQuery(query.trim());
@@ -22,18 +23,27 @@ const Doctors = () => {
     error,
   } = useFetchData(`${BASE_URL}/doctor?query=${debounceQuery}`);
 
+  // Clear search input
+  const handleClearSearch = useCallback(() => {
+    setQuery("");
+    setDebounceQuery("");
+  }, []);
+
   return (
     <>
-      <section className="bg-[#fff9ea]">
+      <section>
         <div className="container text-center">
           <h2 className="heading">Find a Doctor</h2>
-          <div className="max-w-[570px] mt-[30px] mx-auto bg-[#0066ff2c] rounded-md flex items-center justify-between">
+          <div className="max-w-[570px] mt-[30px] mx-auto rounded-md flex items-center justify-between">
             <input
               type="search"
-              className="py-4 pl-4 pr-2 bg-transparent w-full focus:outline-none cursor-pointer placeholder:text-textColor"
+              className="py-4 pl-4 pr-2 glassEffect w-full focus:outline-none cursor-pointer placeholder:text-textColor"
               placeholder="Search Doctor"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") setDebounceQuery(query.trim());
+              }}
             />
             <button
               className="btn mt-0 rounded-[0px] rounded-r-md"
@@ -41,6 +51,14 @@ const Doctors = () => {
             >
               Search
             </button>
+            {query && (
+              <button
+                className="ml-2 text-red-500 font-bold"
+                onClick={handleClearSearch}
+              >
+                Clear
+              </button>
+            )}
           </div>
         </div>
       </section>
@@ -49,12 +67,20 @@ const Doctors = () => {
         <div className="container">
           {loading && <Loader />}
           {error && <Error />}
-          {!loading && !error && doctors && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 lg:gap-[30px] mt-[30px] lg:mt-[55px]">
-              {doctors?.map((doctor) => (
-                <DoctorCard key={doctor.id} doctor={doctor} />
-              ))}
-            </div>
+          {!loading && !error && (
+            <>
+              {doctors?.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 lg:gap-[30px] mt-[30px] lg:mt-[55px]">
+                  {doctors.map((doctor) => (
+                    <DoctorCard key={doctor.id} doctor={doctor} />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-center text-[18px] leading-8 text-headingColor mt-5">
+                  No doctors found matching your search.
+                </p>
+              )}
+            </>
           )}
         </div>
       </section>

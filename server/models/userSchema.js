@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 const UserSchema = new mongoose.Schema(
   {
@@ -6,7 +8,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      match: [/.+\@.+\..+/, "Please enter a valid email address"],
+      match: [
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+        "Please enter a valid email address",
+      ],
     },
     password: {
       type: String,
@@ -17,15 +22,18 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
     phone: {
-      type: Number,
+      type: String,
       validate: {
         validator: function (v) {
-          return /^[0-9]{10,15}$/.test(v); // Validate phone number length (adjust as needed)
+          const phoneNumber = parsePhoneNumberFromString(v);
+          return phoneNumber ? phoneNumber.isValid() : false;
         },
         message: (props) => `${props.value} is not a valid phone number!`,
       },
     },
-    photo: { type: String },
+    photo: {
+      type: String,
+    },
     role: {
       type: String,
       enum: ["patient", "admin"],
@@ -45,5 +53,20 @@ const UserSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+// Password hashing middleware
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = await bcrypt.hash(this.password, 12);
+  next();
+});
+
+// Password comparison method
+UserSchema.methods.comparePassword = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
+
+UserSchema.index({ role: 1 });
+UserSchema.index({ appointments: 1 });
 
 export default mongoose.model("User", UserSchema);

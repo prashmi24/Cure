@@ -1,5 +1,6 @@
 import React from "react";
 import { dateFormat } from "../../utils/dateFormat";
+import { RxAvatar } from "react-icons/rx";
 
 const Appointments = ({ appointments }) => {
   return (
@@ -37,37 +38,37 @@ const Appointments = ({ appointments }) => {
                   className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap"
                 >
                   <img
-                    src={item.user.photo}
-                    alt={`${item.user.name}-img`}
+                    src={item.user?.photo || <RxAvatar />}
+                    alt={`Profile photo of ${item.user?.name || "Unknown"}`}
                     className="w-10 h-10 rounded-full"
                   />
                   <div className="pl-3">
                     <div className="text-base font-semibold">
-                      {item.user.name}
+                      {item.user?.name || "Unknown"}
                     </div>
                     <div className="text-normal text-gray-500">
-                      {item.user.email}
+                      {item.user?.email || "No email"}
                     </div>
                   </div>
                 </th>
                 {/* Gender */}
-                <td className="px-6 py-4 ">{item.user.gender}</td>
+                <td className="px-6 py-4 ">{item.user?.gender || "Unknown"}</td>
                 {/* Payment Status */}
                 <td className="px-6 py-4 ">
                   {item.isPaid ? (
                     <div className="flex items-center">
-                      <div
+                      <span
                         className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"
                         aria-label="Paid"
-                      ></div>
+                      ></span>
                       Paid
                     </div>
                   ) : (
                     <div className="flex items-center">
-                      <div
+                      <span
                         className="h-2.5 w-2.5 rounded-full bg-red mr-2"
                         aria-label="Unpaid"
-                      ></div>
+                      ></span>
                       Unpaid
                     </div>
                   )}
@@ -83,7 +84,9 @@ const Appointments = ({ appointments }) => {
           </tbody>
         </table>
       ) : (
-        <p className="text-center text-gray-500">No appointments available.</p>
+        <p className="text-center text-gray-500" aria-live="polite">
+          No appointments available.
+        </p>
       )}
     </div>
   );

@@ -3,6 +3,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 import authRoute from "./routes/auth.js";
 import userRoute from "./routes/user.js";
 import doctorRoute from "./routes/doctor.js";
@@ -13,8 +15,16 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 //  middleware
+app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
+
+// Rate limiting middleware
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per window
+});
+app.use(limiter);
 
 // CORS Setup
 app.use(
@@ -24,6 +34,12 @@ app.use(
     credentials: true,
   })
 );
+
+// ensuring critical environment variables are present
+if (!process.env.MONGO_URL || !process.env.JWT_SECRET_KEY) {
+  console.error("Critical environment variables are missing!");
+  process.exit(1);
+}
 
 //  database connection
 mongoose.set("strictQuery", false);
@@ -57,8 +73,26 @@ app.use((err, req, res, next) => {
   });
 });
 
+// Handle 404 errors
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "API endpoint not found",
+  });
+});
+
 // Start the server
-app.listen(port, () => {
+const server = app.listen(port, () => {
   connectDB();
   console.log("Server is running on port " + port);
+});
+
+process.on("SIGTERM", () => {
+  console.log("SIGTERM signal received. Closing server...");
+  server.close(() => {
+    mongoose.connection.close(false, () => {
+      console.log("Database connection closed");
+      process.exit(0);
+    });
+  });
 });

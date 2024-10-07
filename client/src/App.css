@@ -19,7 +19,7 @@ body {
 }
 
 .swiper-pagination-bullet-active {
-  background: #fda521 !important;
+  background: #9769d1 !important;
 }
 
 .swiper {
@@ -27,7 +27,7 @@ body {
 }
 
 .swiper-slide.swiper-slide-next {
-  background: #e9e3d5;
+  background: #c2a6e3;
   border-radius: 12px;
   box-shadow: 0px 20px 50px #e9e3d5 !important;
 }

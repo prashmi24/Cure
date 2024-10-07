@@ -18,17 +18,17 @@ const DocAccount = () => {
 
   // State for managing active tab
   const [tab, setTab] = useState("overview");
+  if (loading && !error) {
+    return <Loader />;
+  }
+
+  if (error && !loading) {
+    return <Error />;
+  }
 
   return (
     <section>
       <div className="max-w-[1170px] px-5 mx-auto">
-        {/* Loader while loading */}
-        {loading && !error && <Loader />}
-
-        {/* Error message if error occurs */}
-        {error && !loading && <Error />}
-
-        {/* Render data if loaded successfully */}
         {!loading && !error && data && (
           <div className="grid lg:grid-cols-3 gap-[30px] lg:gap-[50px]">
             {/* Tabs for switching content */}
@@ -65,64 +65,77 @@ const DocAccount = () => {
 
               {/* Main content based on active tab */}
               <div className="mt-8">
-                {tab === "overview" && (
-                  <div>
-                    <div className="flex items-center gap-4 mb-10">
-                      <figure className="max-w-[200px] max-h-[200px]">
-                        {/* Doctor's profile image */}
-                        <img
-                          src={data?.photo || FaUser}
-                          alt="user-img"
-                          className="w-full object-cover"
-                        />
-                      </figure>
-                      <div>
-                        {/* Specialty */}
-                        <span className="bg-yellowColor text-white py-1 px-4 lg:py-2 lg:px-6 rounded text-[12px] leading-4 lg:text-[16px] lg:leading-6 font-semibold">
-                          {data?.specialty || "Specialty Unavailable"}
-                        </span>
+                {(() => {
+                  switch (tab) {
+                    case "overview":
+                      return (
+                        <div>
+                          <div className="flex items-center gap-4 mb-10">
+                            <figure className="max-w-[200px] max-h-[200px]">
+                              {data?.photo ? (
+                                <img
+                                  src={data?.photo}
+                                  alt="Doctor"
+                                  className="w-full object-cover"
+                                />
+                              ) : (
+                                <FaUser className="w-20 h-20 text-gray-400" />
+                              )}
+                            </figure>
+                            <div>
+                              {/* Specialty */}
+                              <span className="bg-yellowColor text-white py-1 px-4 lg:py-2 lg:px-6 rounded text-[12px] leading-4 lg:text-[16px] lg:leading-6 font-semibold">
+                                {data?.specialty || "Specialty Unavailable"}
+                              </span>
 
-                        {/* Doctor's name */}
-                        <h3 className="text-[22px] leading-9 font-bold text-headingColor mt-3">
-                          {data?.name || "Doctor's Name"}
-                        </h3>
+                              {/* Doctor's name */}
+                              <h3 className="text-[22px] leading-9 font-bold text-headingColor mt-3">
+                                {data?.name || "Doctor's Name"}
+                              </h3>
 
-                        {/* Ratings */}
-                        <div className="flex items-center gap-[6px]">
-                          <span className="flex items-center gap-[6px] text-headingColor text-[14px] leading-5 lg:text-[16px] lg:leading-6 font-semibold">
-                            <img src={star} alt="rating" className="h-[20px]" />
-                            {data?.avgRating || 0}
-                          </span>
+                              {/* Ratings */}
+                              <div className="flex items-center gap-[6px]">
+                                <span className="flex items-center gap-[6px] text-headingColor text-[14px] leading-5 lg:text-[16px] lg:leading-6 font-semibold">
+                                  <img
+                                    src={star}
+                                    alt="rating"
+                                    className="h-[20px]"
+                                  />
+                                  {data?.avgRating || 0}
+                                </span>
 
-                          <span className=" text-textColor text-[14px] leading-5 lg:text-[16px] lg:leading-6 font-semibold">
-                            {data?.totalRating || 0} reviews
-                          </span>
+                                <span className=" text-textColor text-[14px] leading-5 lg:text-[16px] lg:leading-6 font-semibold">
+                                  {data?.totalRating || 0} reviews
+                                </span>
+                              </div>
+
+                              {/* Doctor's bio */}
+                              <p className="text-para font-[15px] lg:max-w-[390px] leading-6">
+                                {data?.bio || "No bio available."}
+                              </p>
+
+                              {/* Component for doctor's details */}
+                              <DoctorAbout
+                                name={data?.name || ""}
+                                about={data?.about || ""}
+                                qualifications={data?.qualifications || []}
+                                experiences={data?.experiences || []}
+                              />
+                            </div>
+                          </div>
                         </div>
+                      );
 
-                        {/* Doctor's bio */}
-                        <p className="text-para font-[15px] lg:max-w-[390px] leading-6">
-                          {data?.bio || "No bio available."}
-                        </p>
-
-                        {/* Component for doctor's details */}
-                        <DoctorAbout
-                          name={data?.name || ""}
-                          about={data?.about || ""}
-                          qualifications={data?.qualifications || []}
-                          experiences={data?.experiences || []}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Rendering tabs */}
-                {tab === "appointments" && (
-                  <Appointments appointments={data?.appointments || []} />
-                )}
-                {tab === "settings" && (
-                  <DoctorProfileSettings doctorData={data} />
-                )}
+                    case "appointments":
+                      return (
+                        <Appointments appointments={data?.appointments || []} />
+                      );
+                    case "settings":
+                      return <DoctorProfileSettings doctorData={data} />;
+                    default:
+                      return null;
+                  }
+                })()}
               </div>
             </div>
           </div>

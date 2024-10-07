@@ -19,14 +19,17 @@ const UserProfileSettings = ({ user }) => {
     photo: null,
   });
 
+  // Only update form data when user data is present
   useEffect(() => {
-    setFormData({
-      name: user.name,
-      email: user.email,
-      photo: user.photo,
-      gender: user.gender,
-      bloodGroup: user.bloodGroup,
-    });
+    if (user) {
+      setFormData({
+        name: user.name,
+        email: user.email,
+        photo: user.photo,
+        gender: user.gender,
+        bloodGroup: user.bloodGroup,
+      });
+    }
   }, [user]);
 
   const handleInputChange = (e) => {
@@ -35,6 +38,19 @@ const UserProfileSettings = ({ user }) => {
 
   const handleFileInputChange = async (event) => {
     const file = event.target.files[0];
+
+    if (!file) return;
+
+    const validFileTypes = ["image/jpeg", "image/png"];
+    if (!validFileTypes.includes(file.type)) {
+      toast.error("Only .jpg or .png files are allowed.");
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("File size must be less than 5MB.");
+      return;
+    }
 
     try {
       const data = await uploadImageToCloudinary(file);
@@ -66,11 +82,11 @@ const UserProfileSettings = ({ user }) => {
       if (!res.ok) {
         throw new Error(message);
       }
-      setLoading(false);
       toast.success(message);
       navigate("/users/profile/me");
     } catch (error) {
       toast.error(error.message);
+    } finally {
       setLoading(false);
     }
   };
@@ -132,6 +148,7 @@ const UserProfileSettings = ({ user }) => {
               value={formData.gender}
               onChange={handleInputChange}
               className="text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none"
+              aria-label="Select gender"
             >
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -159,6 +176,7 @@ const UserProfileSettings = ({ user }) => {
               onChange={handleFileInputChange}
               accept=".jpg, .png"
               className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+              aria-label="Upload profile photo"
             />
             <label
               htmlFor="customFile"
@@ -168,11 +186,14 @@ const UserProfileSettings = ({ user }) => {
             </label>
           </div>
         </div>
+
         <div className="mt-7">
           <button
             disabled={loading}
             type="submit"
-            className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3"
+            className={`w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3  ${
+              loading ? "bg-gray-400" : "bg-primaryColor text-white"
+            }`}
           >
             {loading ? (
               <FadeLoader size={30} color="#ffffff" />

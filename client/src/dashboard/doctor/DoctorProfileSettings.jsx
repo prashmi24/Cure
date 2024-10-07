@@ -8,7 +8,6 @@ const DoctorProfileSettings = ({ doctorData }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    // password: "",
     phone: "",
     bio: "",
     gender: "",
@@ -59,11 +58,11 @@ const DoctorProfileSettings = ({ doctorData }) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const res = await fetch(`${BASE_URL}/doctor/${doctorData._id}`, {
+      const res = await fetch(${BASE_URL}/doctor/${doctorData._id}, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: Bearer ${token},
         },
         body: JSON.stringify(formData),
       });
@@ -580,6 +579,7 @@ const DoctorProfileSettings = ({ doctorData }) => {
             type="submit"
             className="bg-primaryColor text-white text-[18px] leading-[30px] w-full py-3 px-rounded-lg"
             disabled={isSubmitting}
+            aria-live="polite"
           >
             {isSubmitting ? "Updating..." : "Update Profile"}
           </button>

@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 const DoctorSchema = new mongoose.Schema(
   {
@@ -20,8 +22,14 @@ const DoctorSchema = new mongoose.Schema(
       required: true,
     },
     phone: {
-      type: Number,
-      match: [/^\d{10}$/, "Please provide a valid 10-digit phone number"],
+      type: String,
+      validate: {
+        validator: function (v) {
+          const phoneNumber = parsePhoneNumberFromString(v);
+          return phoneNumber ? phoneNumber.isValid() : false;
+        },
+        message: (props) => `${props.value} is not a valid phone number!`,
+      },
     },
     photo: {
       type: String,
@@ -35,7 +43,6 @@ const DoctorSchema = new mongoose.Schema(
       default: "doctor",
     },
 
-    // Fields for doctors only
     specialization: {
       type: String,
     },
@@ -53,9 +60,11 @@ const DoctorSchema = new mongoose.Schema(
     },
     about: {
       type: String,
+      maxLength: 500,
     },
     timeSlots: {
       type: [String],
+      default: [],
     },
     reviews: [{ type: mongoose.Types.ObjectId, ref: "Review" }],
     averageRating: {
@@ -79,8 +88,21 @@ const DoctorSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Password hashing middleware
+DoctorSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = await bcrypt.hash(this.password, 12);
+  next();
+});
+
+// Password comparison method
+DoctorSchema.methods.comparePassword = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
+
 DoctorSchema.index({ email: 1 });
 DoctorSchema.index({ averageRating: -1 });
 DoctorSchema.index({ isApproved: 1 });
+DoctorSchema.index({ specialization: 1 });
 
 export default mongoose.model("Doctor", DoctorSchema);

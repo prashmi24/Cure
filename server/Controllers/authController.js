@@ -2,6 +2,7 @@ import User from "../models/userSchema.js";
 import Doctor from "../models/doctorSchema.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import Joi from "joi";
 
 const generateToken = (user) => {
   return jwt.sign(
@@ -13,19 +14,34 @@ const generateToken = (user) => {
   );
 };
 
-const findUserByEmail = async (email, role) => {
-  if (role === "patient") {
-    return await User.findOne({ email });
-  } else if (role === "doctor") {
-    return await Doctor.findOne({ email });
+const findUserByEmail = async (email) => {
+  let user = await User.findOne({ email });
+  if (!user) {
+    user = await Doctor.findOne({ email });
   }
-  return null;
+  return user;
 };
 
+// Register validation schema
+const registerValidationSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().min(6).required(),
+  name: Joi.string().required(),
+  role: Joi.string().valid("patient", "doctor").required(),
+  photo: Joi.string().optional(),
+  gender: Joi.string().valid("male", "female", "other").optional(),
+});
+
+// Register controller
 export const register = async (req, res) => {
+  const { error } = registerValidationSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
+
   const { email, password, name, role, photo, gender } = req.body;
   try {
-    let user = await findUserByEmail(email, role);
+    let user = await findUserByEmail(email);
 
     // if user already exists
     if (user) {
@@ -33,7 +49,6 @@ export const register = async (req, res) => {
     }
 
     // hashing password
-
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
@@ -63,32 +78,25 @@ export const register = async (req, res) => {
       .json({ success: true, message: "User created successfully" });
   } catch (error) {
     console.log(error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Internal server error, please try again later",
-      });
+    res.status(500).json({
+      success: false,
+      message: "Internal server error, please try again later",
+    });
   }
 };
 
+// Login controller
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    let user =
-      (await findUserByEmail(email, "patient")) ||
-      (await findUserByEmail(email, "doctor"));
-    // to check if user exists or not
-
+    let user = await findUserByEmail(email);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
     // password matching
-
     const isPasswordMatch = await bcrypt.compare(password, user.password);
-
     if (!isPasswordMatch) {
       return res
         .status(401)
@@ -96,14 +104,13 @@ export const login = async (req, res) => {
     }
 
     // get token
-
     const token = generateToken(user);
     const { password: _, role, appointments, ...rest } = user._doc;
     res.status(200).json({
       status: true,
       message: "Login Successful",
       token,
-      data: { ...rest },
+      data: userDetails,
       role,
     });
   } catch (error) {

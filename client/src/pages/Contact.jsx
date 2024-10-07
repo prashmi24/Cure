@@ -20,13 +20,19 @@ const Contact = () => {
     e.preventDefault();
 
     if (!formData.email || !formData.subject || !formData.message) {
-      return toast.error("All fields are required");
+      return toast.error("All fields are required", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     }
 
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      toast.success("Message sent successfully");
+      toast.success("Message sent successfully", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
       setFormData({ email: "", subject: "", message: "" });
     }, 2000);
   };
@@ -40,7 +46,12 @@ const Contact = () => {
           laborum!
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-8"
+          aria-busy={loading}
+          aria-live="polite"
+        >
           <div>
             <label htmlFor="email" className="form-label">
               Your email
@@ -93,6 +104,7 @@ const Contact = () => {
             type="submit"
             className="btn rounded sm:w-fit"
             disabled={loading}
+            aria-disabled={loading}
           >
             {loading ? "Submitting..." : "Submit"}
           </button>

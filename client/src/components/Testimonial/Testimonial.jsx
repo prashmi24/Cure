@@ -14,6 +14,8 @@ const Testimonial = () => {
         spaceBetween={30}
         slidesPerView={1}
         pagination={{ clickable: true }}
+        loop={true}
+        autoplay={{ delay: 5000 }}
         breakpoints={{
           640: {
             slidesPerView: 1,
@@ -32,14 +34,17 @@ const Testimonial = () => {
         {/* Map over the testimonial data and render each testimonial within a Swiper slide */}
         {testimonials.map((testimonial) => (
           <SwiperSlide key={testimonial.id || testimonial.name}>
-            <div className="py-[30px] px-5 rounded-[13px] bg-white shadow-md">
+            <div className="py-[30px] px-5 rounded-[13px] shadow-md">
               <div className="flex items-center gap-[13px]">
-                {testimonial.image && (
+                {testimonial.image ? (
                   <img
                     src={testimonial.image}
-                    alt={testimonial.name || "patient"}
+                    alt={`Photo of ${testimonial.name || "patient"}`}
                     className="h-[50px] w-[50px] object-cover rounded-full"
+                    loading="lazy"
                   />
+                ) : (
+                  <div className="h-[50px] w-[50px] bg-gray-200 rounded-full" />
                 )}
                 <div>
                   <h4 className="text-[18px] leading-[30px] font-semibold text-headingColor">
@@ -47,7 +52,7 @@ const Testimonial = () => {
                   </h4>
                   <div className="flex items-center gap-[2px]">
                     {/* Render star icons based on rating */}
-                    {Array.from({ length: testimonial.rating }).map(
+                    {Array.from({ length: testimonial.rating || 0 }).map(
                       (_, index) => (
                         <HiStar
                           key={index}
@@ -59,9 +64,13 @@ const Testimonial = () => {
                 </div>
               </div>
 
-              {testimonial.content && (
+              {testimonial.content ? (
                 <p className="text-[16px] leading-7 mt-4 text-textColor font-[400]">
                   {testimonial.content}
+                </p>
+              ) : (
+                <p className="text-[16px] leading-7 mt-4 text-gray-400 italic">
+                  No review provided.
                 </p>
               )}
             </div>

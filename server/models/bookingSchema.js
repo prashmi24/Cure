@@ -21,11 +21,17 @@ const bookingSchema = new mongoose.Schema(
     appointmentDate: {
       type: Date,
       required: true,
+      validate: {
+        validator: function (v) {
+          return v.getTime() > Date.now();
+        },
+        message: "Appointment date must be in the future",
+      },
       index: true,
     },
     status: {
       type: String,
-      enum: ["pending", "approved", "cancelled"],
+      enum: ["pending", "approved", "cancelled", "completed", "no-show"],
       default: "pending",
     },
     isPaid: {
@@ -37,5 +43,6 @@ const bookingSchema = new mongoose.Schema(
 );
 
 bookingSchema.index({ user: 1, doctor: 1, appointmentDate: 1 });
+bookingSchema.index({ status: 1 });
 
 export default mongoose.model("Booking", bookingSchema);

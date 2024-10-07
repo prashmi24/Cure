@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import doc1 from "../../assets/images/doc1.jpg";
 import star from "../../assets/images/star.png";
 import DoctorAbout from "./DoctorAbout";
 import Feedback from "./Feedback";
@@ -20,19 +19,20 @@ const DoctorDetails = () => {
   } = useFetchData(`${BASE_URL}/doctor/${id}`);
 
   const {
-    name = "",
-    phone = "",
-    bio = "",
-    gender = "",
-    specialty = "",
-    amount = "",
+    name = "Doctor Name",
+    phone = "N/A",
+    bio = "No bio available",
+    gender = "N/A",
+    specialty = "Specialty",
+    amount = "N/A",
     qualifications = [],
     experiences = [],
     timeSlots = [],
-    about = "",
-    photo = "",
+    about = "No information available",
+    photo = "/default-image.jpg", // Placeholder image
     avgRating = "N/A",
     totalRating = 0,
+    reviews = [],
   } = doctor || {};
 
   return (
@@ -47,9 +47,12 @@ const DoctorDetails = () => {
                 <img
                   src={photo}
                   alt={`Photo of Dr. ${name}`}
-                  className="w-full"
+                  className="w-full h-auto object-cover"
+                  loading="lazy"
+                  onError={(e) => (e.target.src = "/default-image.jpg")}
                 />
               </figure>
+
               <div>
                 <span className="bg-[#ccf0f3] text-irisBlueColor py-1 px-6 lg:py-2 lg:px-6 text-[12px] leading-4 lg:text-[16px] lg:leading-7 font-semibold rounded">
                   {specialty}
@@ -57,15 +60,18 @@ const DoctorDetails = () => {
                 <h3 className="text-headingColor text-[22px] leading-9 mt-3 font-bold">
                   {name}
                 </h3>
+
                 <div className="flex items-center gap-[6px]">
                   <span className="flex items-center gap-[6px] text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-semibold text-headingColor">
                     <img src={star} alt="star-icon" className="h-[20px]" />
                     {avgRating}
                   </span>
+
                   <span className="text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-semibold text-textColor">
                     ({totalRating})
                   </span>
                 </div>
+
                 <p className="text-para text-[14px] leading-5 md:text-[15px] max-w-[390px]">
                   {bio}
                 </p>
@@ -77,7 +83,7 @@ const DoctorDetails = () => {
                   className={`${
                     tab === "about" &&
                     "border-b border-solid border-primaryColor"
-                  }py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}
+                  } py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}
                 >
                   About
                 </button>
@@ -87,7 +93,7 @@ const DoctorDetails = () => {
                   className={`${
                     tab === "feedback" &&
                     "border-b border-solid border-primaryColor"
-                  }py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}
+                  } py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}
                 >
                   Feedback
                 </button>
@@ -103,10 +109,7 @@ const DoctorDetails = () => {
                   />
                 )}
                 {tab === "feedback" && (
-                  <Feedback
-                    reviews={doctor.reviews || []}
-                    totalRating={totalRating}
-                  />
+                  <Feedback reviews={reviews} totalRating={totalRating} />
                 )}
               </div>
             </div>

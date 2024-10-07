@@ -6,17 +6,18 @@ import about from "../../assets/images/about.jpg";
 const About = () => {
   return (
     <div className="container">
-      {/* Flex container for responsive layout */}
-      <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-8 lg:gap-16">
+      <section className="flex flex-col-reverse lg:flex-row items-center justify-between gap-8 lg:gap-16">
         {/* Image section */}
         <div className="relative  w-full lg:w-1/2 xl:w-1/3 order-1 lg:order-2">
           <img
             src={about}
-            alt="About Cure healthcare booking platform"
+            alt="Doctor consultation on Cure healthcare booking platform"
             className="w-full object-cover max-h-[800px]"
+            loading="lazy"
           />
         </div>
 
+        {/* Text content section */}
         <div className="w-full lg:w-1/2 xl:w-[670px] order-2 lg:order-1">
           <h2 className="heading">
             Join thousands of satisfied users & experience the future of
@@ -49,7 +50,7 @@ const About = () => {
             </button>
           </Link>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

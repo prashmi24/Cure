@@ -4,16 +4,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        primaryColor: "#FDA521",
+        primaryColor: "#9769d1",
+        secondaryColor: "#c2a6e3",
         yellowColor: "#FEB60D",
-        purpleColor: "#9771FF",
-        irisBlueColor: "#01B5C5",
+        accentColor: "#5ac8fa",
+        greenColor: "#A0D468",
         headingColor: "#181A1E",
-        textColor: "#4E545F",
+        textColor: "#333333",
+        whiteColor: "#FAFAFA",
+        borderColor: "#d1d1d1",
       },
 
       boxShadow: {
-        panelShadow: "rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;",
+        panelShadow: "#d1d1d1 0px 48px 100px 0px;",
       },
     },
   },

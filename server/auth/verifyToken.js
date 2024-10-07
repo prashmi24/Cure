@@ -1,14 +1,14 @@
 import jwt from "jsonwebtoken";
 
 export const authenticate = async (req, res, next) => {
-  // getting token from headers
-  const authToken = req.headers.authorization;
+  // getting token from headers or query parameter
+  const authToken = req.headers.authorization || req.query.token;
 
   // checking if the token exists or not
   if (!authToken || !authToken.startsWith("Bearer")) {
     return res
       .status(401)
-      .json({ success: false, message: "No token, authorization denied" });
+      .json({ success: false, message: "Token missing or invalid" });
   }
 
   try {
@@ -20,17 +20,19 @@ export const authenticate = async (req, res, next) => {
     req.role = decoded.role;
     next();
   } catch (error) {
-    if (error.name === "TokenExpiredError") {
-      return res.status(401).json({ message: "Token is expired" });
-    }
-    return res.status(401).json({ success: false, message: "Invalid token" });
+    const message =
+      error.name === "TokenExpiredError"
+        ? "Authentication failed"
+        : "Invalid token";
+    return res.status(401).json({ success: false, message });
   }
 };
 
+// Restrict access to specific roles
 export const restrict = (roles) => (req, res, next) => {
   if (!roles.includes(req.role)) {
     return res
-      .status(403) // Use 403 for "Forbidden" access when roles don't match
+      .status(403)
       .json({ success: false, message: "Unauthorized access" });
   }
 

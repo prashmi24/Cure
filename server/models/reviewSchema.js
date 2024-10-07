@@ -16,6 +16,7 @@ const reviewSchema = new mongoose.Schema(
     reviewText: {
       type: String,
       required: true,
+      maxLength: 500,
     },
     rating: {
       type: Number,
@@ -32,7 +33,6 @@ reviewSchema.pre(/^find/, function (next) {
     path: "user",
     select: "name photo",
   });
-
   next();
 });
 
@@ -63,8 +63,23 @@ reviewSchema.statics.calcAverageRatings = async function (doctorId) {
   }
 };
 
+//recalculating ratings
+
 reviewSchema.post("save", function () {
   this.constructor.calcAverageRatings(this.doctor);
 });
+
+reviewSchema.post("remove", function () {
+  this.constructor.calcAverageRatings(this.doctor);
+});
+
+reviewSchema.post("findOneAndUpdate", function (doc) {
+  if (doc) {
+    doc.constructor.calcAverageRatings(doc.doctor);
+  }
+});
+
+reviewSchema.index({ doctor: 1 });
+reviewSchema.index({ user: 1 });
 
 export default mongoose.model("Review", reviewSchema);
